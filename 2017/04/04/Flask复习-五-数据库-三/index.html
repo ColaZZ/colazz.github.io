@@ -6,17 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zlinxx.com">
-  <title>Archives: 2017/3 | zlinxx</title>
+  <title>Flask复习 五 数据库(三) | zlinxx</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="start from zero">
-<meta property="og:type" content="website">
-<meta property="og:title" content="zlinxx">
-<meta property="og:url" content="http://zlinxx.com/archives/2017/03/index.html">
+  <meta name="description" content="5.9 在视图函数中操作数据库5.10 集成python shell注册一个make_context回调函数,把对象添加到导入列表中1234from flask.ext.script import Shelldef make_shell_context():    return dict(app=app, db=db, User=User, Role=Role)manager.add_comman">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flask复习 五 数据库(三)">
+<meta property="og:url" content="http://zlinxx.com/2017/04/04/Flask复习-五-数据库-三/index.html">
 <meta property="og:site_name" content="zlinxx">
-<meta property="og:description" content="start from zero">
+<meta property="og:description" content="5.9 在视图函数中操作数据库5.10 集成python shell注册一个make_context回调函数,把对象添加到导入列表中1234from flask.ext.script import Shelldef make_shell_context():    return dict(app=app, db=db, User=User, Role=Role)manager.add_comman">
+<meta property="og:updated_time" content="2017-04-03T16:17:59.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="zlinxx">
-<meta name="twitter:description" content="start from zero">
+<meta name="twitter:title" content="Flask复习 五 数据库(三)">
+<meta name="twitter:description" content="5.9 在视图函数中操作数据库5.10 集成python shell注册一个make_context回调函数,把对象添加到导入列表中1234from flask.ext.script import Shelldef make_shell_context():    return dict(app=app, db=db, User=User, Role=Role)manager.add_comman">
   
     <link rel="alternative" href="/atom.xml" title="zlinxx" type="application/atom+xml">
   
@@ -146,49 +147,155 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Flask复习-五-数据库-三" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/03/05/hexo部属个人blog成功/" class="archive-article-date">
-  	<time datetime="2017-03-05T11:01:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-05</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/03/05/hexo部属个人blog成功/">hexo部属个人blog成功</a>
+    <h1 class="article-title" itemprop="name">
+      Flask复习 五 数据库(三)
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2017/04/04/Flask复习-五-数据库-三/" class="archive-article-date">
+  	<time datetime="2017-04-03T16:17:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="5-9-在视图函数中操作数据库"><a href="#5-9-在视图函数中操作数据库" class="headerlink" title="5.9 在视图函数中操作数据库"></a>5.9 在视图函数中操作数据库</h1><h1 id="5-10-集成python-shell"><a href="#5-10-集成python-shell" class="headerlink" title="5.10 集成python shell"></a>5.10 集成python shell</h1><p>注册一个make_context回调函数,把对象添加到导入列表中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">from flask.ext.script import Shell</div><div class="line">def make_shell_context():</div><div class="line">    return dict(app=app, db=db, User=User, Role=Role)</div><div class="line">manager.add_command(&quot;shell&quot;,Shell(make_context=make_shell_context))</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h1 id="5-11-使用Flask-Migrate实现数据库迁移"><a href="#5-11-使用Flask-Migrate实现数据库迁移" class="headerlink" title="5.11 使用Flask-Migrate实现数据库迁移"></a>5.11 使用Flask-Migrate实现数据库迁移</h1><p>Flask-Migrate扩展对Alembic做了轻量级包装,病集成到Flask-Script中,所有操作都通过Flask-Script完成.</p>
+<h2 id="5-11-1-创建迁移仓库"><a href="#5-11-1-创建迁移仓库" class="headerlink" title="5.11.1 创建迁移仓库"></a>5.11.1 创建迁移仓库</h2><p>首先,配置Flask-Migrate,把Flask-Migrate包装进Flask-Script语句中.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">from flask.ext.migrate import Migrate, MigrateCommand</div><div class="line"># ...</div><div class="line">migrate = Migrate(app, db)</div><div class="line">manager.add_command(&apos;db&apos;, MigrateCommand)</div></pre></td></tr></table></figure></p>
+<p>然后,使用init子命令创建迁移仓库:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(venv) $ python hello.py db init</div></pre></td></tr></table></figure></p>
+<p>这个命令会创建migrations文件夹,所有迁移脚本都存放其中.</p>
+<h2 id="5-11-2-创建迁移脚本"><a href="#5-11-2-创建迁移脚本" class="headerlink" title="5.11.2 创建迁移脚本"></a>5.11.2 创建迁移脚本</h2><p>在Alembic中,数据库迁移用迁移脚本表示.脚本中有两个函数,分别是upgrade()和downgrade().upgrade()函数把迁移中的改动应用到数据库中,downgrade()函数则将改动删除.<br>migrade子命令用来自动创建迁移脚本:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(venv) $ python hello.py db migrate -m &quot;initial migration&quot;</div></pre></td></tr></table></figure></p>
+<h2 id="5-11-3-更新数据库"><a href="#5-11-3-更新数据库" class="headerlink" title="5.11.3 更新数据库"></a>5.11.3 更新数据库</h2><p>检查并修正好脚本之后,我们可以使用db upgrade命令把迁移应用到数据库中:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(venv) $ python hello.py db upgrade</div></pre></td></tr></table></figure></p>
+<p>对第一个迁移来说，其作用和调用 db.create_all() 方法一样。但在后续的迁移中，<br>upgrade 命令能把改动应用到数据库中，且不影响其中保存的数据。</p>
 
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://zlinxx.com/2017/04/04/Flask复习-五-数据库-三/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2017/04/04/Flask复习-六-电子邮件/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Flask复习 六 电子邮件
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2017/04/04/Flask复习-五-数据库-二/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Flask复习 五 数据库(二)</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+    <div class="duoshuo"></div>
   
 
-    
+
 
 
           </div>
@@ -211,8 +318,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

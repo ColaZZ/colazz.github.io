@@ -6,17 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zlinxx.com">
-  <title>Archives: 2017/3 | zlinxx</title>
+  <title>Flask复习 七 大型程序的结构(二) | zlinxx</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="start from zero">
-<meta property="og:type" content="website">
-<meta property="og:title" content="zlinxx">
-<meta property="og:url" content="http://zlinxx.com/archives/2017/03/index.html">
+  <meta name="description" content="7.4 启动脚本manage.pyw文件
+初始化Flask-Script,Flask-Migrate和未Python Shell定义的上下文.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flask复习 七 大型程序的结构(二)">
+<meta property="og:url" content="http://zlinxx.com/2017/04/04/Flask复习-七-大型程序的结构-二/index.html">
 <meta property="og:site_name" content="zlinxx">
-<meta property="og:description" content="start from zero">
+<meta property="og:description" content="7.4 启动脚本manage.pyw文件
+初始化Flask-Script,Flask-Migrate和未Python Shell定义的上下文.">
+<meta property="og:updated_time" content="2017-04-03T16:19:52.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="zlinxx">
-<meta name="twitter:description" content="start from zero">
+<meta name="twitter:title" content="Flask复习 七 大型程序的结构(二)">
+<meta name="twitter:description" content="7.4 启动脚本manage.pyw文件
+初始化Flask-Script,Flask-Migrate和未Python Shell定义的上下文.">
   
     <link rel="alternative" href="/atom.xml" title="zlinxx" type="application/atom+xml">
   
@@ -146,49 +150,151 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Flask复习-七-大型程序的结构-二" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/03/05/hexo部属个人blog成功/" class="archive-article-date">
-  	<time datetime="2017-03-05T11:01:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-05</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/03/05/hexo部属个人blog成功/">hexo部属个人blog成功</a>
+    <h1 class="article-title" itemprop="name">
+      Flask复习 七 大型程序的结构(二)
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2017/04/04/Flask复习-七-大型程序的结构-二/" class="archive-article-date">
+  	<time datetime="2017-04-03T16:19:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="7-4-启动脚本"><a href="#7-4-启动脚本" class="headerlink" title="7.4 启动脚本"></a>7.4 启动脚本</h1><p><strong>manage.pyw文件</strong></p>
+<p>初始化Flask-Script,Flask-Migrate和未Python Shell定义的上下文.</p>
+<a id="more"></a>
+<h1 id="7-5-需求文件"><a href="#7-5-需求文件" class="headerlink" title="7.5 需求文件"></a>7.5 需求文件</h1><p><strong>requirements.txt文件</strong><br><figure class="highlight plain"><figcaption><span>$ pip freeze >requirements.txt ```该命令自动生成这个文件</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"># 7.6 单元测试</div><div class="line">使用python标准库中的unittest编写(assertFasle和assertTrue)</div><div class="line"></div><div class="line">setUp() 方法尝试创建一个测试环境，类似于运行中的程序。首先，使用测试配置创建程 序，然后激活上下文。这一步的作用是确保能在测试中使用 current_app，像普通请求一 样。然后创建一个全新的数据库，以备不时之需。数据库和程序上下文在 tearDown() 方法 中删除。</div><div class="line"></div><div class="line"># 7.7 创建数据库</div><div class="line"></div><div class="line">数据库创建或者升级</div></pre></td></tr></table></figure></p>
+<p>(venv) $ python manage.py db upgrade<br>```</p>
 
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://zlinxx.com/2017/04/04/Flask复习-七-大型程序的结构-二/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2017/04/04/Flask复习-八-用户认证-二/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Flask复习 八 用户认证(二)
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2017/04/04/Flask复习-七-大型程序的结构-一/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Flask复习 七 大型程序的结构(一)</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+    <div class="duoshuo"></div>
   
 
-    
+
 
 
           </div>
@@ -211,8 +317,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

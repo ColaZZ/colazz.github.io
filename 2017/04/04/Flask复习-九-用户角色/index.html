@@ -6,17 +6,30 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zlinxx.com">
-  <title>Archives: 2017/3 | zlinxx</title>
+  <title>Flask复习 九 用户角色 | zlinxx</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="start from zero">
-<meta property="og:type" content="website">
-<meta property="og:title" content="zlinxx">
-<meta property="og:url" content="http://zlinxx.com/archives/2017/03/index.html">
+  <meta name="description" content="9.1 角色在数据库中的表示
+app/models
+
+
+default:只有一个角色的default字段要设为True,其他都设为False.注册时便分配.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flask复习 九 用户角色">
+<meta property="og:url" content="http://zlinxx.com/2017/04/04/Flask复习-九-用户角色/index.html">
 <meta property="og:site_name" content="zlinxx">
-<meta property="og:description" content="start from zero">
+<meta property="og:description" content="9.1 角色在数据库中的表示
+app/models
+
+
+default:只有一个角色的default字段要设为True,其他都设为False.注册时便分配.">
+<meta property="og:updated_time" content="2017-04-03T16:29:42.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="zlinxx">
-<meta name="twitter:description" content="start from zero">
+<meta name="twitter:title" content="Flask复习 九 用户角色">
+<meta name="twitter:description" content="9.1 角色在数据库中的表示
+app/models
+
+
+default:只有一个角色的default字段要设为True,其他都设为False.注册时便分配.">
   
     <link rel="alternative" href="/atom.xml" title="zlinxx" type="application/atom+xml">
   
@@ -146,49 +159,222 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Flask复习-九-用户角色" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/03/05/hexo部属个人blog成功/" class="archive-article-date">
-  	<time datetime="2017-03-05T11:01:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-05</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/03/05/hexo部属个人blog成功/">hexo部属个人blog成功</a>
+    <h1 class="article-title" itemprop="name">
+      Flask复习 九 用户角色
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2017/04/04/Flask复习-九-用户角色/" class="archive-article-date">
+  	<time datetime="2017-04-03T16:29:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="9-1-角色在数据库中的表示"><a href="#9-1-角色在数据库中的表示" class="headerlink" title="9.1 角色在数据库中的表示"></a>9.1 角色在数据库中的表示</h1><ul>
+<li>app/models</li>
+</ul>
+<ol>
+<li><p>default:只有一个角色的default字段要设为True,其他都设为False.注册时便分配.</p>
+<a id="more"></a>
+</li>
+<li><p>perimissions字段:整数,表示位标志.</p>
+</li>
+</ol>
+<p>程序的权限</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>权限</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>关注用户</td>
+<td>0b00000001(0x01)</td>
+<td>关注其他用户</td>
+</tr>
+<tr>
+<td>在他人的文章中发表评论</td>
+<td>0b00000010(0x02)</td>
+<td>在他人撰写的文章中发布评论</td>
+</tr>
+<tr>
+<td>写文章</td>
+<td>0b00000100(0x04)</td>
+<td>写原创文章</td>
+</tr>
+<tr>
+<td>管理他人发表的评论</td>
+<td>0b00001000(0x08)</td>
+<td>查处他人发表的不当言论</td>
+</tr>
+<tr>
+<td>管理员权限</td>
+<td>0b10000000(0x80)</td>
+<td>管理网站</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>class Permission     权限常量</li>
+<li>insert_roles()       在数据库中创建角色<br>用户User:FOLLOW | COMMENT | WRITE_ARTICLES<pre><code>0x01 | 0x02 | 0x04 = **0x07**
+</code></pre>协管员Moderator:FOLLOW | COMMETN | WRITE_ARTICLES | MODERATE_COMMENTS<pre><code>0x01 | 0x02 | 0x04 | 0x08 = 0x0f
+</code></pre>管理员Administrator:0xff<br>如果以后更新了角色列表,就可以执行更新操作了.</li>
+</ol>
+<h1 id="9-2-赋予角色"><a href="#9-2-赋予角色" class="headerlink" title="9.2 赋予角色"></a>9.2 赋予角色</h1><h2 id="app-models"><a href="#app-models" class="headerlink" title="app/models:"></a>app/models:</h2><ul>
+<li>def <strong>init</strong>(self, **kwargs):User类的构造函数首先调用基类的构造函数,如果创建基类对象后还没定义角色,则根据email地址决定将其设为管理员还是默认角色.</li>
+</ul>
+<h1 id="9-3-角色验证"><a href="#9-3-角色验证" class="headerlink" title="9.3 角色验证"></a>9.3 角色验证</h1><ul>
+<li>app/models:</li>
+</ul>
+<ol>
+<li>User:User模型中添加的can()方法在请求和赋予角色这两种权限之间进行位与操作.如果角色中包含请求的所有位权限位,则返回True,表示允许用户执行此项操作.检查管理员权限的功能经常用到,因此使用单独的方法is_administrator()实现.</li>
+<li>AnonymousUser:can()方法和is_administrator()方法.这个对象继承自Flask-Login中的AnonymousUserMixin类,并将其设为用户未登录时current_user的值.这样程序不用先检查用户是否登陆,就能自由调用current_user.can()和current_user.is_administrator()</li>
+</ol>
+<ul>
+<li>app/decorators:想让是凸函数只对具有特定权限的用户开放,可以使用自定义的修饰器.</li>
+</ul>
+<ol>
+<li>permission_required:检查常规权限</li>
+<li>admin_required:检查管理员权限<br>不具备条件时,返回403错误码.即HTTP禁止错误</li>
+</ol>
+<ul>
+<li>app/main/<strong>init</strong> 把Permission类加入模板上下文</li>
+</ul>
+<ol>
+<li>@main.app_context_processor:上下文处理器</li>
+</ol>
 
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://zlinxx.com/2017/04/04/Flask复习-九-用户角色/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2017/04/04/Flask复习-十-用户资料/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Flask复习 十 用户资料
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2017/04/04/Flask复习-八-用户认证-三/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Flask复习 八 用户认证(三)</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+    <div class="duoshuo"></div>
   
 
-    
+
 
 
           </div>
@@ -211,8 +397,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

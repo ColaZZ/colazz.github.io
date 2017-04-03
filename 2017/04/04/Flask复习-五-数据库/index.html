@@ -6,17 +6,30 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zlinxx.com">
-  <title>Archives: 2017/3 | zlinxx</title>
+  <title>Flask复习 五 数据库 | zlinxx</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="start from zero">
-<meta property="og:type" content="website">
-<meta property="og:title" content="zlinxx">
-<meta property="og:url" content="http://zlinxx.com/archives/2017/03/index.html">
+  <meta name="description" content="SQL数据库:关系型数据库NoSQL数据库:文档数据库和键值对数据库
+5.1 SQL数据库
+5.2 NoSQL数据库
+5.3 使用SQL还是NoSQLSQL 数据库擅于用高效且紧凑的形式存储结构化数据.这种数据库需要花费大量精力保证数据的一致性.NoSQL数据库放宽了对这种一致性的要求,从而获得性能上的优势.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flask复习 五 数据库">
+<meta property="og:url" content="http://zlinxx.com/2017/04/04/Flask复习-五-数据库/index.html">
 <meta property="og:site_name" content="zlinxx">
-<meta property="og:description" content="start from zero">
+<meta property="og:description" content="SQL数据库:关系型数据库NoSQL数据库:文档数据库和键值对数据库
+5.1 SQL数据库
+5.2 NoSQL数据库
+5.3 使用SQL还是NoSQLSQL 数据库擅于用高效且紧凑的形式存储结构化数据.这种数据库需要花费大量精力保证数据的一致性.NoSQL数据库放宽了对这种一致性的要求,从而获得性能上的优势.">
+<meta property="og:image" content="http://zlinxx.com/C:\Users\zlinxx\Desktop\QQ截图20170321104032.png">
+<meta property="og:image" content="http://zlinxx.com/C:\Users\zlinxx\Desktop\QQ截图20170321104416.png">
+<meta property="og:updated_time" content="2017-04-03T16:14:23.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="zlinxx">
-<meta name="twitter:description" content="start from zero">
+<meta name="twitter:title" content="Flask复习 五 数据库">
+<meta name="twitter:description" content="SQL数据库:关系型数据库NoSQL数据库:文档数据库和键值对数据库
+5.1 SQL数据库
+5.2 NoSQL数据库
+5.3 使用SQL还是NoSQLSQL 数据库擅于用高效且紧凑的形式存储结构化数据.这种数据库需要花费大量精力保证数据的一致性.NoSQL数据库放宽了对这种一致性的要求,从而获得性能上的优势.">
+<meta name="twitter:image" content="http://zlinxx.com/C:\Users\zlinxx\Desktop\QQ截图20170321104032.png">
   
     <link rel="alternative" href="/atom.xml" title="zlinxx" type="application/atom+xml">
   
@@ -146,49 +159,190 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Flask复习-五-数据库" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/03/05/hexo部属个人blog成功/" class="archive-article-date">
-  	<time datetime="2017-03-05T11:01:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-05</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/03/05/hexo部属个人blog成功/">hexo部属个人blog成功</a>
+    <h1 class="article-title" itemprop="name">
+      Flask复习 五 数据库
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2017/04/04/Flask复习-五-数据库/" class="archive-article-date">
+  	<time datetime="2017-04-03T16:13:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>SQL数据库:关系型数据库<br>NoSQL数据库:文档数据库和键值对数据库</p>
+<h1 id="5-1-SQL数据库"><a href="#5-1-SQL数据库" class="headerlink" title="5.1 SQL数据库"></a>5.1 SQL数据库</h1><p><img src="C:\Users\zlinxx\Desktop\QQ截图20170321104032.png" alt="image"></p>
+<h1 id="5-2-NoSQL数据库"><a href="#5-2-NoSQL数据库" class="headerlink" title="5.2 NoSQL数据库"></a>5.2 NoSQL数据库</h1><p><img src="C:\Users\zlinxx\Desktop\QQ截图20170321104416.png" alt="image"></p>
+<h1 id="5-3-使用SQL还是NoSQL"><a href="#5-3-使用SQL还是NoSQL" class="headerlink" title="5.3 使用SQL还是NoSQL"></a>5.3 使用SQL还是NoSQL</h1><p>SQL 数据库擅于用高效且紧凑的形式存储结构化数据.这种数据库需要花费大量精力保证数据的一致性.NoSQL数据库放宽了对这种一致性的要求,从而获得性能上的优势.</p>
+<a id="more"></a>
+<h1 id="5-4-Python数据库框架"><a href="#5-4-Python数据库框架" class="headerlink" title="5.4 Python数据库框架"></a>5.4 Python数据库框架</h1><p>本项目选用Flask-SQLAlchemy</p>
+<h1 id="5-5-使用Flask-SQLAlchemy管理数据库"><a href="#5-5-使用Flask-SQLAlchemy管理数据库" class="headerlink" title="5.5 使用Flask-SQLAlchemy管理数据库"></a>5.5 使用Flask-SQLAlchemy管理数据库</h1><p>数据库使用URL指定.程序使用的数据库URL必须保存到Flask配置对象的SQLALCHEMY_DATABASE_URI键中.<br>配置对象中还有一个很有用的选项,即SQLALCHEMY_COMMIT_ON_TEARDOWN键,将其设为True时,每次请求结束后都会自动提交数据库中的变动.</p>
+<p><strong>配置SQLite数据库示例</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">from flask.ext.sqlalchemy import SQLAlchemy</div><div class="line"></div><div class="line">basedir = os.path.abspath(os.path.dirname(__file__))</div><div class="line"></div><div class="line">app = Flask(__name__)</div><div class="line">app.config[&apos;SQLALCHEMY_DATABASE_URI&apos;] =\</div><div class="line">    &apos;sqlite:///&apos; + os.path.join(basedir, &apos;data.sqlite&apos;)</div><div class="line">app.config[&apos;SQLALCHEMY_COMMIT_ON_TEARDOWN&apos;] = True</div><div class="line"></div><div class="line">db = SQLAlchemy(app)</div></pre></td></tr></table></figure></p>
+<p>db对象时SQLAlchemy类的实例,表示程序使用的数据库,同时还获得了Flask-SQLAlchemy提供的所有功能.</p>
+<h1 id="5-6-定义模型"><a href="#5-6-定义模型" class="headerlink" title="5.6 定义模型"></a>5.6 定义模型</h1><p><strong>定义Role和User</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">class Role(db.Model):</div><div class="line">    __tablename__ = &apos;roles&apos;</div><div class="line">    id = db.Column(db.Integer, primary_key=True)</div><div class="line">    name = db.Column(db.String(64), unique=True)</div><div class="line">    </div><div class="line">    def __repr__(self):</div><div class="line">        return &apos;&lt;Role %r&gt;&apos; % self.name</div><div class="line">        </div><div class="line">class User(db.Model):</div><div class="line">    __table__=&apos;roles&apos;</div><div class="line">    id = db.Column(db.Integer, primary_key=True)</div><div class="line">    username = db.Column(db.String(64), unique=True, index=True) </div><div class="line">    </div><div class="line">    def __repr__(self):</div><div class="line">        return &apos;&lt;User %r&gt;&apos; % self.username</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><figcaption><span>定义数据库中使用的表名.</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">db.Column类构造的第一个参数是数据库列和模型属性的类型.</div><div class="line"></div><div class="line">常用的SQLAlchemy列类型</div><div class="line"></div><div class="line">| 类型名          | python类型           | 说明                            |</div><div class="line">| ------------ | ------------------ | ----------------------------- |</div><div class="line">| Integer      | int                | 普通整数,一般是32位                   |</div><div class="line">| SmallInteger | int                | 取值范围小的整数,一般是16位               |</div><div class="line">| BigInteger   | int或long           | 不限精度的整数                       |</div><div class="line">| Float        | float              | 浮点数                           |</div><div class="line">| Numeric      | decimal.Decimal    | 定点数                           |</div><div class="line">| String       | str                | 变长字符串                         |</div><div class="line">| Text         | str                | 变长字符串,对较长或不限长度的字符串做了优化        |</div><div class="line">| Unicode      | unicode            | 变长Unicode字符串                  |</div><div class="line">| UnicodeText  | unicode            | 变长Unicode字符串,对较长或不限长度的字符串做了优化 |</div><div class="line">| Boolean      | bool               | 布尔值                           |</div><div class="line">| Date         | datetime.date      | 日期                            |</div><div class="line">| Time         | datetime.date      | 时间                            |</div><div class="line">| DateTime     | datetime.datetime  | 日期和时间                         |</div><div class="line">| Interval     | datetime.timedelta | 时间间隔                          |</div><div class="line">| Enum         | str                | 一组字符串                         |</div><div class="line">| PickleType   | 任何Python对象         | 自动使用Pickle序列化                 |</div><div class="line">| LargeBinary  | str                | 二进制文件                         |</div><div class="line"></div><div class="line">最常使用的SQLAlchemy列选项</div><div class="line"></div><div class="line">| 选项名         | 说明                                    |</div><div class="line">| ----------- | ------------------------------------- |</div><div class="line">| primary_key | 如果设为True,这列就是表的主键                     |</div><div class="line">| unique      | 如果设为True,这列不允许出现重复的值                  |</div><div class="line">| index       | 如果设为True,为这列创建索引,提升查询效率               |</div><div class="line">| nullable    | 如果设为True,这列允许使用空值,如果设为False,这列不允许使用空值 |</div><div class="line">| default     | 为这列定义默认值                              |</div><div class="line"></div><div class="line"># 5.7 关系</div></pre></td></tr></table></figure>
+<p>class Role(db.Model):</p>
+<pre><code># ...
+users = db.relationship(&apos;User&apos;, backref=&apos;role&apos;)
+</code></pre><p>class User(db.Model):</p>
+<pre><code># ...
+role_id = db.Column(db.Integer, db.ForeignKey(&apos;roles.id&apos;))
+</code></pre><p><code>```db.relationship()</code> 的第一个参数表明这个关系的另一端是哪个模型.如果模型尚未定义,可使用字符串形式指定.</p>
+<p><code>db.relationship()</code> 中的backref参数向User模型中添加一个role 的属性,从而定义反向关系.这一属性克替代role_id访问Role模型,此时获取的是模型对象,而不是外键的值.</p>
+<p>常用的SQLAlchemy关系选项</p>
+<table>
+<thead>
+<tr>
+<th>选项名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>backref</td>
+<td>在关系的另一个模型中添加反向引用</td>
+</tr>
+<tr>
+<td>primaryjoin</td>
+<td>明确指定两个模型之间使用的联结条件.只在模棱两可的关系中需要指定</td>
+</tr>
+<tr>
+<td>lazy</td>
+<td>指定如何加载相关记录。可选值有 select（首次访问时按需加载）、 immediate（源对象加</td>
+</tr>
+</tbody>
+</table>
+<p>载后就加载）、 joined（加载记录，但使用联结）、 subquery（立即加载，但使用子查询），<br>noload（永不加载）和 dynamic（不加载记录，但提供加载记录的查询）<br>uselist | 如果设为False,不适用列表,而使用标量值<br>order_by | 指定关系中记录的排序方式<br>secondary | 指定多对多关系中关系表的名字<br>secondaryjoin | SQLAlchemy无法自行决定时,指定多对多关系中的二级联结条件</p>
 
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://zlinxx.com/2017/04/04/Flask复习-五-数据库/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2017/04/04/Flask复习-五-数据库-二/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Flask复习 五 数据库(二)
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2017/04/04/Flask复习-四-Web表单/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Flask复习 三 模板(三)</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+    <div class="duoshuo"></div>
   
 
-    
+
 
 
           </div>
@@ -211,8 +365,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

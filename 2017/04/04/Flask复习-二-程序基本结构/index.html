@@ -6,17 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zlinxx.com">
-  <title>Archives: 2017/3 | zlinxx</title>
+  <title>Flask复习 二 程序基本结构 | zlinxx</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="start from zero">
-<meta property="og:type" content="website">
-<meta property="og:title" content="zlinxx">
-<meta property="og:url" content="http://zlinxx.com/archives/2017/03/index.html">
+  <meta name="description" content="2.1 初始化Web服务器使用一种名为Web服务器网关接口的协议,把接受自客户端的所有请求都转交给这个对象处理.
+12from flask import Flaskapp = Flask(__name__)
+name的值app就是程序主模块或包的名字.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flask复习 二 程序基本结构">
+<meta property="og:url" content="http://zlinxx.com/2017/04/04/Flask复习-二-程序基本结构/index.html">
 <meta property="og:site_name" content="zlinxx">
-<meta property="og:description" content="start from zero">
+<meta property="og:description" content="2.1 初始化Web服务器使用一种名为Web服务器网关接口的协议,把接受自客户端的所有请求都转交给这个对象处理.
+12from flask import Flaskapp = Flask(__name__)
+name的值app就是程序主模块或包的名字.">
+<meta property="og:updated_time" content="2017-04-03T16:05:06.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="zlinxx">
-<meta name="twitter:description" content="start from zero">
+<meta name="twitter:title" content="Flask复习 二 程序基本结构">
+<meta name="twitter:description" content="2.1 初始化Web服务器使用一种名为Web服务器网关接口的协议,把接受自客户端的所有请求都转交给这个对象处理.
+12from flask import Flaskapp = Flask(__name__)
+name的值app就是程序主模块或包的名字.">
   
     <link rel="alternative" href="/atom.xml" title="zlinxx" type="application/atom+xml">
   
@@ -146,49 +153,159 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Flask复习-二-程序基本结构" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/03/05/hexo部属个人blog成功/" class="archive-article-date">
-  	<time datetime="2017-03-05T11:01:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-05</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/03/05/hexo部属个人blog成功/">hexo部属个人blog成功</a>
+    <h1 class="article-title" itemprop="name">
+      Flask复习 二 程序基本结构
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2017/04/04/Flask复习-二-程序基本结构/" class="archive-article-date">
+  	<time datetime="2017-04-03T16:03:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="2-1-初始化"><a href="#2-1-初始化" class="headerlink" title="2.1 初始化"></a>2.1 初始化</h1><p>Web服务器使用一种名为Web服务器网关接口的协议,把接受自客户端的所有请求都转交给这个对象处理.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">from flask import Flask</div><div class="line">app = Flask(__name__)</div></pre></td></tr></table></figure>
+<p><strong>name</strong>的值app就是程序主模块或包的名字.</p>
+<a id="more"></a>
+<h1 id="2-2-路由和视图函数"><a href="#2-2-路由和视图函数" class="headerlink" title="2.2 路由和视图函数"></a>2.2 路由和视图函数</h1><p>app.route修饰器定义路由</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">@app.route(&apos;/&apos;)</div><div class="line">def index():</div><div class="line">    return &apos;&lt;h1&gt;Hello World!&lt;/h1&gt;&apos;</div></pre></td></tr></table></figure>
+<p>index为视图函数,在浏览器中访问默认网址后,会触发服务器执行index()函数.这个函数的返回值成为响应,是客户端接收到的内容.<br>动态地址route修饰器同样支持.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">@app.route(&apos;/user/&lt;name&gt;&apos;)</div><div class="line">def user(name):</div><div class="line">    return &apos;&lt;h1&gt;Hello, %s!&lt;/h1&gt;&apos; % name</div></pre></td></tr></table></figure>
+<p>尖括号中<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"># 2.3 启动服务器</div><div class="line">```run``` 方法启动Flask集成的开发Web环境:</div></pre></td></tr></table></figure></p>
+<p>if <strong>name</strong> == ‘<strong>main</strong>‘<br>    app.run(debug=True)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">服务器启动后,胡进入轮询,等待并处理请求.轮询会一直运行,知道程序停止,比如ctrl-c.</div><div class="line"></div><div class="line"># 2.5 请求-响应循环</div><div class="line">## 2.5.1 程序和请求上下文</div><div class="line">上下文把某些对象变为全局可访问.有了上下文,可以避免大量可有可无的参数把视图函数搞乱.</div><div class="line">Flask使用上下文让特定的变量在一个线程中全局可访问,并且不会干扰其他线程.</div><div class="line"></div><div class="line">| 变量名         | 上下文   | 说明                          |</div><div class="line">| ----------- | ----- | --------------------------- |</div><div class="line">| current_app | 程序上下文 | 当前激活程序的程序实例                 |</div><div class="line">| g           | 程序上下文 | 处理请求时用作临时存储的对象.每次请求都会重设这个变量 |</div><div class="line">| request     | 请求上下文 | 请求对象,封装了客户端发出的HTTP中的请求      |</div><div class="line">| session     | 请求上下文 | 用户会话,用于存储请求之间需要&quot;记住&quot;的值的字典    |</div><div class="line"></div><div class="line">程序上下文被推送后,就可以使用current_app和g变量.</div><div class="line">请求上下文被推送后,就可以使用request和session变量.</div><div class="line"></div><div class="line">## 2.5.2 请求调度</div><div class="line">客户端发来请求,要找到处理该请求的视图函数.为了完成和这个任务,Flask会在程序的URL映射中查找请求的URL.URl映射是URL和视图函数之间的对应关系,Flask使用app.route修饰器或者非修饰器形式的app.add_url_rule()生成映射.</div><div class="line"></div><div class="line">## 2.5.3 请求钩子</div><div class="line">在处理请求之前或者之后执行代码,就是请求钩子.</div><div class="line">请求钩子使用修饰器实现,Flask支持以下四种:</div><div class="line">- before_first_request:注册一个函数,在处理第一个请求之前运行.</div><div class="line">- before_request:注册一个函数,在每次请求之前运行.</div><div class="line">- after_request:注册一个函数,如果没有未处理的异常抛出,在每次请求之后运行.</div><div class="line">- teardown_request:注册一个函数,及时有未处理的异常抛出,也在每次请求之后运行.</div><div class="line"></div><div class="line">在请求钩子与视图函数之间共享数据,一般使用上下文全局变量g.</div><div class="line"></div><div class="line">## 2.5.4 响应</div><div class="line">Response = (内容+状态码+Header字典)</div><div class="line">其中,状态码:</div><div class="line">- 400:请求无效</div><div class="line">- 302:重定向            (Flask提供redirect()辅助函数)</div><div class="line">- 404:错误              ```abort(404)```abort不会把控制权交给调用它的函数,而是抛出异常把控制权交给Web服务器.</div><div class="line"></div><div class="line"># 2.6 Flask扩展之Flask-Script支持命令行选项</div></pre></td></tr></table></figure></p>
+<p>from flask.ext.script import Manager<br>manager = Manager(app)</p>
+<p>#…</p>
+<p>if <strong>name</strong> == ‘<strong>main</strong>‘:<br>    manage.run()<br>```<br>在这里,服务器由manager.run()启动,启动后能解析命令行了.</p>
 
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://zlinxx.com/2017/04/04/Flask复习-二-程序基本结构/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2017/04/04/Flask复习-三-模板-二/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Flask复习 三 模板(二)
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2017/04/03/Flask复习-一-安装/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Flask复习 一 安装</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+    <div class="duoshuo"></div>
   
 
-    
+
 
 
           </div>
@@ -211,8 +328,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

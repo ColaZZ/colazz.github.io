@@ -6,17 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zlinxx.com">
-  <title>Archives: 2017/3 | zlinxx</title>
+  <title>Flask复习 八 用户认证(二) | zlinxx</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="start from zero">
-<meta property="og:type" content="website">
-<meta property="og:title" content="zlinxx">
-<meta property="og:url" content="http://zlinxx.com/archives/2017/03/index.html">
+  <meta name="description" content="8.4 使用Flask-Login认证用户8.4.1 准备用于登陆的用户模型
+model:要使用Flask-Login,User Model必须实现几个方法.可以直接写出来,但是Flask-Login提供了一个UserMixin类,包含这几个方法的默认实现,且能满足大多数需求.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flask复习 八 用户认证(二)">
+<meta property="og:url" content="http://zlinxx.com/2017/04/04/Flask复习-八-用户认证-二/index.html">
 <meta property="og:site_name" content="zlinxx">
-<meta property="og:description" content="start from zero">
+<meta property="og:description" content="8.4 使用Flask-Login认证用户8.4.1 准备用于登陆的用户模型
+model:要使用Flask-Login,User Model必须实现几个方法.可以直接写出来,但是Flask-Login提供了一个UserMixin类,包含这几个方法的默认实现,且能满足大多数需求.">
+<meta property="og:updated_time" content="2017-04-03T16:27:15.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="zlinxx">
-<meta name="twitter:description" content="start from zero">
+<meta name="twitter:title" content="Flask复习 八 用户认证(二)">
+<meta name="twitter:description" content="8.4 使用Flask-Login认证用户8.4.1 准备用于登陆的用户模型
+model:要使用Flask-Login,User Model必须实现几个方法.可以直接写出来,但是Flask-Login提供了一个UserMixin类,包含这几个方法的默认实现,且能满足大多数需求.">
   
     <link rel="alternative" href="/atom.xml" title="zlinxx" type="application/atom+xml">
   
@@ -146,49 +150,191 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Flask复习-八-用户认证-二" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/03/05/hexo部属个人blog成功/" class="archive-article-date">
-  	<time datetime="2017-03-05T11:01:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-05</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/03/05/hexo部属个人blog成功/">hexo部属个人blog成功</a>
+    <h1 class="article-title" itemprop="name">
+      Flask复习 八 用户认证(二)
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2017/04/04/Flask复习-八-用户认证-二/" class="archive-article-date">
+  	<time datetime="2017-04-03T16:20:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="8-4-使用Flask-Login认证用户"><a href="#8-4-使用Flask-Login认证用户" class="headerlink" title="8.4 使用Flask-Login认证用户"></a>8.4 使用Flask-Login认证用户</h1><h2 id="8-4-1-准备用于登陆的用户模型"><a href="#8-4-1-准备用于登陆的用户模型" class="headerlink" title="8.4.1 准备用于登陆的用户模型"></a>8.4.1 准备用于登陆的用户模型</h2><ol>
+<li><p><strong>model</strong>:要使用Flask-Login,User Model必须实现几个方法.<br>可以直接写出来,但是Flask-Login提供了一个UserMixin类,包含这几个方法的默认实现,且能满足大多数需求.</p>
+<a id="more"></a>
+</li>
+<li><p><strong>工厂函数初始化</strong>: </p>
+</li>
+</ol>
+<ul>
+<li>LoginManager对象的session_protection属性可以设为None,’basic’,’strong’,已提供不同的安全等级防止用户会话遭篡改.<br>设为’strong’时,Flask-Login会记录客户端IP的地址和浏览器的用户代理信息,如果发现异动就登出用户.</li>
+<li>login_view属性设置登录页面的端点.</li>
+</ul>
+<ol>
+<li>最后实现一个回调函数,使用指定的标识符加载用户.</li>
+</ol>
+<ul>
+<li>该回调函数接收以Unicode字符串形式表示的用户标识符.如果能找到用户,这个函数必须返回用户对象;否则应该返回None.</li>
+</ul>
+<h2 id="8-4-2-保护路由"><a href="#8-4-2-保护路由" class="headerlink" title="8.4.2 保护路由"></a>8.4.2 保护路由</h2><p>为了保护路由只让认证用户访问,Flask-Login提供了一个login_required修饰器.</p>
+<h2 id="8-4-3-添加登录表单"><a href="#8-4-3-添加登录表单" class="headerlink" title="8.4.3 添加登录表单"></a>8.4.3 添加登录表单</h2><p>给用户一个登录表单,一个用于输入电子邮件地址的文本字段,一个密码字段,一个”记住我”复选框和提交按钮.</p>
+<ul>
+<li>app/auth/forms</li>
+</ul>
+<ol>
+<li>email:验证函数Email()</li>
+<li>password:PasswordField表示type=’password’的<input>元素</li>
+<li>remember_me:BooleanField表示复选框</li>
+</ol>
+<ul>
+<li>app/templates/base.html登录条</li>
+</ul>
+<ol>
+<li>is_authenticated():判断用户是否登录,登录返回True,否则False</li>
+<li>逻辑为如果用户在登录状态,则显示登出.否则显示登录.</li>
+</ol>
+<h2 id="8-4-4-登入用户"><a href="#8-4-4-登入用户" class="headerlink" title="8.4.4 登入用户"></a>8.4.4 登入用户</h2><ul>
+<li>app/auth/views</li>
+</ul>
+<ol>
+<li>这个视图函数创建了一个LoginForm.GET时视图函数直接渲染模板,即显示表单.POST时,Flask-WTF中的validate_on_submit()函数会验证表单数据,然后尝试登入用户.</li>
+<li>首先使用填写的email从数据库中查询用户,然后verify_password(),第三步调用login_user()函数,在用户会话中把用户标记为已登录.</li>
+<li>记住我选项:False的话,关闭浏览器后用户会话过期.True的话会在用户浏览器中写入一个长期有效的 cookie，使用这个 cookie 可以复现用户会话.</li>
+<li>目标URL有两种可能:用户访问未授权的URL时会显示登录表单,Flask-Login会把原地址保存在查询字符串next中,从request.args中读取.如果没有next,则重定向到首页.</li>
+<li>密码或email不正确,显示flash消息.</li>
+</ol>
+<h2 id="8-4-5-登出用户"><a href="#8-4-5-登出用户" class="headerlink" title="8.4.5 登出用户"></a>8.4.5 登出用户</h2><p>‘/logout’:使用logout_user()函数,实现删除并删除重设用户会话.随后显示一个Flash消息,再重定向到首页.</p>
+<h2 id="8-4-6-测试登录"><a href="#8-4-6-测试登录" class="headerlink" title="8.4.6 测试登录"></a>8.4.6 测试登录</h2>
+      
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://zlinxx.com/2017/04/04/Flask复习-八-用户认证-二/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2017/04/04/Flask复习-八-用户认证-一/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Flask复习 八 用户认证(一)
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2017/04/04/Flask复习-七-大型程序的结构-二/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Flask复习 七 大型程序的结构(二)</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+    <div class="duoshuo"></div>
   
 
-    
+
 
 
           </div>
@@ -211,8 +357,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

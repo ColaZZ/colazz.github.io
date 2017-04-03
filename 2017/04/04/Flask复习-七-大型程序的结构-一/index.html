@@ -6,17 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zlinxx.com">
-  <title>Archives: 2017/3 | zlinxx</title>
+  <title>Flask复习 七 大型程序的结构(一) | zlinxx</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="start from zero">
-<meta property="og:type" content="website">
-<meta property="og:title" content="zlinxx">
-<meta property="og:url" content="http://zlinxx.com/archives/2017/03/index.html">
+  <meta name="description" content="7.1 项目结构1234567891011121314151617181920|-flasky    |-app/              # Flask主程序 (7.3)        |-templates/        |-static/        |-main/            |-__init__.py            |-errors.py            |">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flask复习 七 大型程序的结构(一)">
+<meta property="og:url" content="http://zlinxx.com/2017/04/04/Flask复习-七-大型程序的结构-一/index.html">
 <meta property="og:site_name" content="zlinxx">
-<meta property="og:description" content="start from zero">
+<meta property="og:description" content="7.1 项目结构1234567891011121314151617181920|-flasky    |-app/              # Flask主程序 (7.3)        |-templates/        |-static/        |-main/            |-__init__.py            |-errors.py            |">
+<meta property="og:updated_time" content="2017-04-03T16:19:22.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="zlinxx">
-<meta name="twitter:description" content="start from zero">
+<meta name="twitter:title" content="Flask复习 七 大型程序的结构(一)">
+<meta name="twitter:description" content="7.1 项目结构1234567891011121314151617181920|-flasky    |-app/              # Flask主程序 (7.3)        |-templates/        |-static/        |-main/            |-__init__.py            |-errors.py            |">
   
     <link rel="alternative" href="/atom.xml" title="zlinxx" type="application/atom+xml">
   
@@ -146,49 +147,167 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Flask复习-七-大型程序的结构-一" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/03/05/hexo部属个人blog成功/" class="archive-article-date">
-  	<time datetime="2017-03-05T11:01:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-05</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/03/05/hexo部属个人blog成功/">hexo部属个人blog成功</a>
+    <h1 class="article-title" itemprop="name">
+      Flask复习 七 大型程序的结构(一)
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2017/04/04/Flask复习-七-大型程序的结构-一/" class="archive-article-date">
+  	<time datetime="2017-04-03T16:19:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="7-1-项目结构"><a href="#7-1-项目结构" class="headerlink" title="7.1 项目结构"></a>7.1 项目结构</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">|-flasky</div><div class="line">    |-app/              # Flask主程序 (7.3)</div><div class="line">        |-templates/</div><div class="line">        |-static/</div><div class="line">        |-main/</div><div class="line">            |-__init__.py</div><div class="line">            |-errors.py</div><div class="line">            |-forms.py</div><div class="line">            |-views.py</div><div class="line">        |-__init__.py</div><div class="line">        |-email.py</div><div class="line">        |-models.py</div><div class="line">    |-migrations/       # 数据库迁移脚本</div><div class="line">    |-tests/            # 单元测试</div><div class="line">        |-__init__.py</div><div class="line">        |-test*.py</div><div class="line">    |-venv/             # 虚拟环境</div><div class="line">    |-requirements.txt  # 列出所有依赖包</div><div class="line">    |-config.py         # 存储配置 (7.2)</div><div class="line">    |-manage.py         # 用于启动程序以及其他程序的任务</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h1 id="7-2-配置选项"><a href="#7-2-配置选项" class="headerlink" title="7.2 配置选项"></a>7.2 配置选项</h1><p><strong>config.py文件</strong></p>
+<p><em>通过访问os.envirom字典可以访问环境变量</em></p>
+<p>开发(dev), 测试(test), 生产环境(product)要使用不同的数据库,这样不会彼此影响.在config.py中,使用三个子类,SQLALCHEMY_DATABASE_URI变量都被指向了不同的值.这样程序就可以在不同的配置环境中运行,每个环境都使用不同的数据库.</p>
+<h1 id="7-3-程序包"><a href="#7-3-程序包" class="headerlink" title="7.3 程序包"></a>7.3 程序包</h1><p><strong>app文件夹</strong> 当然,如果你有需求,也可以使用其他名字</p>
+<h2 id="7-3-1-使用程序工厂函数"><a href="#7-3-1-使用程序工厂函数" class="headerlink" title="7.3.1 使用程序工厂函数"></a>7.3.1 使用程序工厂函数</h2><p><strong>app/<strong>init</strong>.py文件</strong></p>
+<p>单个文件开发程序很方便,但是有个很大的问题.<br>程序在全局域中创建,所以无法动态修改配置.<br>解决方法:延迟创建程序实例,把创建过程移到可显式调用的<strong>工厂函数</strong>中.</p>
+<h2 id="7-3-2-在蓝本中实现程序功能"><a href="#7-3-2-在蓝本中实现程序功能" class="headerlink" title="7.3.2 在蓝本中实现程序功能"></a>7.3.2 在蓝本中实现程序功能</h2><p><strong>app/main/<strong>init</strong>.py文件</strong></p>
+<p>如果在app/<strong>init</strong>.py中create_app()之后再调用app.route修饰器显然太晚了.app.errorhandler也面临同样的问题.</p>
+<p>幸好Flask使用<strong>蓝本</strong>提供了解决方法.蓝本和程序类似,也可以定义路由.不同的是,在蓝本中定义的路由处于休眠状态,直到蓝本注册到程序上之后,路由才真正的成为程序的一部分.</p>
+<p>通过实例化一个Blueprint类对象可以创建蓝本.<br>这个构造函数有两个必须制定的参数:蓝本的名字(main)和蓝本所在的包或模块(大多数情况下使用<strong>name</strong>变量即可).</p>
+<p>app/main/errors.py:蓝本中的错误处理<br>在蓝本中编写错误处理程序稍有不同，如果使用 errorhandler 修饰器，那么只有蓝本中的错误才能触发处理程序。要想注册程序全局的错误处理程序，必须使用 app_errorhandler。</p>
+<p>app/main/view.py:蓝本中定义的程序路由<br>在蓝本中编写视图函数主要有两点不同:<br>第一,和errorhandler一样,route路由修饰器由蓝本提供<br>第二,url_for()函数的用法不同.</p>
+<ol>
+<li><p>url_for()函数的第一个参数是路由的端点名,在程序的路由中,默认为视图函数的名字.</p>
+</li>
+<li><p>在蓝本中,Flask会为蓝本中的全部端点加上一个命名空间,这样就可以在不同的蓝本中使用相同的端点名定义视图函数,而不会产生冲突.命名空间就是蓝本的名字(Blueprint构造函数的第一个参数),所以index()注册的端点名是main.index,其URL使用url_for(‘main.index’)获取.</p>
+</li>
+</ol>
+<p>url_for()函数还支持一种简写的端点形式,在蓝本中可以省略蓝本名,例如<code>url_for(&#39;.index&#39;)</code>,但是跨蓝本的重定向必须使用带有命名空间的端点名.</p>
 
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://zlinxx.com/2017/04/04/Flask复习-七-大型程序的结构-一/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2017/04/04/Flask复习-七-大型程序的结构-二/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Flask复习 七 大型程序的结构(二)
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2017/04/04/Flask复习-六-电子邮件/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Flask复习 六 电子邮件</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+    <div class="duoshuo"></div>
   
 
-    
+
 
 
           </div>
@@ -211,8 +330,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

@@ -6,17 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zlinxx.com">
-  <title>Archives: 2017/3 | zlinxx</title>
+  <title>Flask复习 十一 博客文章(二) | zlinxx</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="start from zero">
-<meta property="og:type" content="website">
-<meta property="og:title" content="zlinxx">
-<meta property="og:url" content="http://zlinxx.com/archives/2017/03/index.html">
+  <meta name="description" content="11.3 分页显示长博客文章列表11.3.1 创建虚拟博客文章数据
+使用ForgeryPy导入虚拟数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flask复习 十一 博客文章(二)">
+<meta property="og:url" content="http://zlinxx.com/2017/04/04/Flask复习-十一-博客文章-二/index.html">
 <meta property="og:site_name" content="zlinxx">
-<meta property="og:description" content="start from zero">
+<meta property="og:description" content="11.3 分页显示长博客文章列表11.3.1 创建虚拟博客文章数据
+使用ForgeryPy导入虚拟数据">
+<meta property="og:updated_time" content="2017-04-03T16:32:18.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="zlinxx">
-<meta name="twitter:description" content="start from zero">
+<meta name="twitter:title" content="Flask复习 十一 博客文章(二)">
+<meta name="twitter:description" content="11.3 分页显示长博客文章列表11.3.1 创建虚拟博客文章数据
+使用ForgeryPy导入虚拟数据">
   
     <link rel="alternative" href="/atom.xml" title="zlinxx" type="application/atom+xml">
   
@@ -146,49 +150,172 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Flask复习-十一-博客文章-二" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/03/05/hexo部属个人blog成功/" class="archive-article-date">
-  	<time datetime="2017-03-05T11:01:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-05</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/03/05/hexo部属个人blog成功/">hexo部属个人blog成功</a>
+    <h1 class="article-title" itemprop="name">
+      Flask复习 十一 博客文章(二)
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2017/04/04/Flask复习-十一-博客文章-二/" class="archive-article-date">
+  	<time datetime="2017-04-03T16:31:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="11-3-分页显示长博客文章列表"><a href="#11-3-分页显示长博客文章列表" class="headerlink" title="11.3 分页显示长博客文章列表"></a>11.3 分页显示长博客文章列表</h1><h2 id="11-3-1-创建虚拟博客文章数据"><a href="#11-3-1-创建虚拟博客文章数据" class="headerlink" title="11.3.1 创建虚拟博客文章数据"></a>11.3.1 创建虚拟博客文章数据</h2><ul>
+<li><p>使用ForgeryPy导入虚拟数据</p>
+<a id="more"></a></li>
+</ul>
+<ol>
+<li>dev.txt 列出开发过程中所需的依赖</li>
+<li>prod.txt 列出生产中的所需的依赖</li>
+<li>因此可以创建一个common.txt文件,在dev.txt和prod.txt中使用-r参数导入.</li>
+<li>电子邮箱email=forgery_py.internet.email_address()</li>
+</ol>
+<h2 id="11-3-2-在页面中渲染数据"><a href="#11-3-2-在页面中渲染数据" class="headerlink" title="11.3.2 在页面中渲染数据"></a>11.3.2 在页面中渲染数据</h2><ul>
+<li>分业显示博客文章列表:app/main/views</li>
+</ul>
+<ol>
+<li>渲染的页数从请求的查询字符串(request.args)中获取,如果没有明确指定,则默认渲染第一页.</li>
+<li>为了显示某页中的记录,要把all()换成Flask-SQLAlchemy提供的paginate()方法.页数是paginate()方法的第一个参数,也是唯一必须的参数.可选参数per_page用来指定煤业现实的记录数量;如果没有指定,则默认显示20个记录.另一个可选参数为error_out,党旗设为True时(默认值), 如果请求的页数超出了范围,则会返回404错误;如果设为False,页数超出范围时会返回一个空列表.</li>
+</ol>
+<h2 id="11-3-3-添加分页导航"><a href="#11-3-3-添加分页导航" class="headerlink" title="11.3.3 添加分页导航"></a>11.3.3 添加分页导航</h2><p>////////</p>
+<h1 id="11-4-使用markdown和falsk-pagedown支持富文本文章"><a href="#11-4-使用markdown和falsk-pagedown支持富文本文章" class="headerlink" title="11.4 使用markdown和falsk-pagedown支持富文本文章"></a>11.4 使用markdown和falsk-pagedown支持富文本文章</h1><h2 id="11-4-1-使用Flask-PageDown"><a href="#11-4-1-使用Flask-PageDown" class="headerlink" title="11.4.1 使用Flask-PageDown"></a>11.4.1 使用Flask-PageDown</h2><ul>
+<li>初始化Flask-Pagedown:app/<strong>init</strong>.py</li>
+<li>启用Markdown文章表单:用PageDownFieled替换TextAreaField</li>
+</ul>
+<h2 id="11-4-2-在服务器上处理富文本"><a href="#11-4-2-在服务器上处理富文本" class="headerlink" title="11.4.2 在服务器上处理富文本"></a>11.4.2 在服务器上处理富文本</h2><ul>
+<li>在Post模型中处理Markdown文本:app/models/post</li>
+</ul>
+<h1 id="11-5-博客文章的固定链接"><a href="#11-5-博客文章的固定链接" class="headerlink" title="11.5 博客文章的固定链接"></a>11.5 博客文章的固定链接</h1><p>/post/<int:id><br>id为post表中的id</int:id></p>
+<h1 id="11-6-博客文章编辑器"><a href="#11-6-博客文章编辑器" class="headerlink" title="11.6 博客文章编辑器"></a>11.6 博客文章编辑器</h1>
+      
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://zlinxx.com/2017/04/04/Flask复习-十一-博客文章-二/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2017/04/04/Flask复习十二-关注者/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Flask复习十二 关注者
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2017/04/04/Flask复习-十一-博客文章-一/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Flask复习 十一 博客文章(一)</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+    <div class="duoshuo"></div>
   
 
-    
+
 
 
           </div>
@@ -211,8 +338,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

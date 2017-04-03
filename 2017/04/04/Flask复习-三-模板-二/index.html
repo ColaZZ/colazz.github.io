@@ -6,17 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zlinxx.com">
-  <title>Archives: 2017/3 | zlinxx</title>
+  <title>Flask复习 三 模板(二) | zlinxx</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="start from zero">
-<meta property="og:type" content="website">
-<meta property="og:title" content="zlinxx">
-<meta property="og:url" content="http://zlinxx.com/archives/2017/03/index.html">
+  <meta name="description" content="3.2 使用Flask-Bootstrap集成 Bootstrap安装:$ pip install flask-bootstrap ```123初始化:&amp;lt;!-- more --&amp;gt;
+from flask.ext.bootstrap import Bootstrap
+#…bootstrap = Bootstrap(app)1234567891011121314151617181920212">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flask复习 三 模板(二)">
+<meta property="og:url" content="http://zlinxx.com/2017/04/04/Flask复习-三-模板-二/index.html">
 <meta property="og:site_name" content="zlinxx">
-<meta property="og:description" content="start from zero">
+<meta property="og:description" content="3.2 使用Flask-Bootstrap集成 Bootstrap安装:$ pip install flask-bootstrap ```123初始化:&amp;lt;!-- more --&amp;gt;
+from flask.ext.bootstrap import Bootstrap
+#…bootstrap = Bootstrap(app)1234567891011121314151617181920212">
+<meta property="og:updated_time" content="2017-04-03T16:13:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="zlinxx">
-<meta name="twitter:description" content="start from zero">
+<meta name="twitter:title" content="Flask复习 三 模板(二)">
+<meta name="twitter:description" content="3.2 使用Flask-Bootstrap集成 Bootstrap安装:$ pip install flask-bootstrap ```123初始化:&amp;lt;!-- more --&amp;gt;
+from flask.ext.bootstrap import Bootstrap
+#…bootstrap = Bootstrap(app)1234567891011121314151617181920212">
   
     <link rel="alternative" href="/atom.xml" title="zlinxx" type="application/atom+xml">
   
@@ -146,49 +153,154 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Flask复习-三-模板-二" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/03/05/hexo部属个人blog成功/" class="archive-article-date">
-  	<time datetime="2017-03-05T11:01:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-05</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/03/05/hexo部属个人blog成功/">hexo部属个人blog成功</a>
+    <h1 class="article-title" itemprop="name">
+      Flask复习 三 模板(二)
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2017/04/04/Flask复习-三-模板-二/" class="archive-article-date">
+  	<time datetime="2017-04-03T16:11:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="3-2-使用Flask-Bootstrap集成-Bootstrap"><a href="#3-2-使用Flask-Bootstrap集成-Bootstrap" class="headerlink" title="3.2 使用Flask-Bootstrap集成 Bootstrap"></a>3.2 使用Flask-Bootstrap集成 Bootstrap</h1><p>安装:<figure class="highlight plain"><figcaption><span>$ pip install flask-bootstrap ```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">初始化:</div><div class="line"></div><div class="line">&lt;!-- more --&gt;</div></pre></td></tr></table></figure></p>
+<p>from flask.ext.bootstrap import Bootstrap</p>
+<p>#…<br>bootstrap = Bootstrap(app)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">| 块名           | 说明                |</div><div class="line">| ------------ | ----------------- |</div><div class="line">| doc          | 整个HTML文档          |</div><div class="line">| html_attribs | &lt;html&gt;标签的属性       |</div><div class="line">| html         | &lt;html&gt;标签中的内容      |</div><div class="line">| head         | &lt;head&gt;标签中的内容      |</div><div class="line">| title        | &lt;title&gt;标签中的内容     |</div><div class="line">| metas        | 一组&lt;meta&gt;标签        |</div><div class="line">| styles       | 层叠样式表定义           |</div><div class="line">| body_attribs | &lt;body&gt;标签的属性       |</div><div class="line">| body         | &lt;body&gt;标签中的内容      |</div><div class="line">| navbar       | 用户定义的导航条          |</div><div class="line">| content      | 用户定义的页面内容         |</div><div class="line">| scripts      | 文档底部的Javascript声明 |</div><div class="line"></div><div class="line">上表中很多块欧式Flask-Bootstrap自用的,如果直接重定义可能会导致一些问题.例如，Bootstrap所需的文件在styles和scripts块中声明。如果程序需要向已经有内容的块中添加新内容， 必须使用 Jinja2 提供的 super() 函数。</div><div class="line"></div><div class="line"># 3.3 自定义错误页面</div><div class="line">自定义错误页面的路由和响应函数:</div><div class="line">1. 404,客户端请求未知页面或路由时显示.</div><div class="line">2. 500,有未处理的异常时显示.</div></pre></td></tr></table></figure></p>
+<p>@app.errorhandler(404):<br>def page_not_found(e):<br>    return render_template(‘404.html’), 404</p>
+<p>@app.errorhandler(500);<br>def internal_server_error(e):<br>    return render_template(‘500.html’), 500<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">错误页面的模板由Jinja2的模板继承机制实现.</div><div class="line"></div><div class="line"># 3.4 链接</div><div class="line">```url_for()``` 辅助函数,她可以使用程序URL映射中保存的信息生成URL.</div><div class="line">以下都是合法调用:</div></pre></td></tr></table></figure></p>
+<p>url_for(‘index’)                    # 得到的结果是/<br>url_for(‘index’, _external=True)    # 得到的结果是绝对地址,<a href="http://localhost:5000/" target="_blank" rel="external">http://localhost:5000/</a><br>url_for(‘user’, name=’john’, _external=True)    #返回结果是<a href="http://localhsot:5000/user/john" target="_blank" rel="external">http://localhsot:5000/user/john</a><br>url_for(‘index’, page=2)            #得到的结果是/?page=2<br>```</p>
+<h1 id="3-5-静态文件"><a href="#3-5-静态文件" class="headerlink" title="3.5 静态文件"></a>3.5 静态文件</h1><p>static文件夹下面</p>
+<h1 id="3-6使用Flask-Moment本地化日期和时间"><a href="#3-6使用Flask-Moment本地化日期和时间" class="headerlink" title="3.6使用Flask-Moment本地化日期和时间"></a>3.6使用Flask-Moment本地化日期和时间</h1><p>要想在服务器上只是用UTC时间,一个优雅的解决方案是,把时间单位发送给Web浏览器,转换成当地时间,然后渲染.<br>本项目中使用第三方库Flask-Moment,把moment.js集成到Jinja2模板中.</p>
 
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://zlinxx.com/2017/04/04/Flask复习-三-模板-二/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2017/04/04/Flask复习-四-Web表单/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Flask复习 三 模板(三)
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2017/04/04/Flask复习-二-程序基本结构/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Flask复习 二 程序基本结构</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+    <div class="duoshuo"></div>
   
 
-    
+
 
 
           </div>
@@ -211,8 +323,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

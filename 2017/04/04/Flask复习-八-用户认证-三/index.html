@@ -6,17 +6,30 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zlinxx.com">
-  <title>Archives: 2017/3 | zlinxx</title>
+  <title>Flask复习 八 用户认证(三) | zlinxx</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="start from zero">
-<meta property="og:type" content="website">
-<meta property="og:title" content="zlinxx">
-<meta property="og:url" content="http://zlinxx.com/archives/2017/03/index.html">
+  <meta name="description" content="8.5 注册新用户8.5.1 添加用户注册表单
+app/auth/form 用户表单RegistrationForm
+
+
+email">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flask复习 八 用户认证(三)">
+<meta property="og:url" content="http://zlinxx.com/2017/04/04/Flask复习-八-用户认证-三/index.html">
 <meta property="og:site_name" content="zlinxx">
-<meta property="og:description" content="start from zero">
+<meta property="og:description" content="8.5 注册新用户8.5.1 添加用户注册表单
+app/auth/form 用户表单RegistrationForm
+
+
+email">
+<meta property="og:updated_time" content="2017-04-03T16:29:01.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="zlinxx">
-<meta name="twitter:description" content="start from zero">
+<meta name="twitter:title" content="Flask复习 八 用户认证(三)">
+<meta name="twitter:description" content="8.5 注册新用户8.5.1 添加用户注册表单
+app/auth/form 用户表单RegistrationForm
+
+
+email">
   
     <link rel="alternative" href="/atom.xml" title="zlinxx" type="application/atom+xml">
   
@@ -146,49 +159,279 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Flask复习-八-用户认证-三" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/03/05/hexo部属个人blog成功/" class="archive-article-date">
-  	<time datetime="2017-03-05T11:01:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-05</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/03/05/hexo部属个人blog成功/">hexo部属个人blog成功</a>
+    <h1 class="article-title" itemprop="name">
+      Flask复习 八 用户认证(三)
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2017/04/04/Flask复习-八-用户认证-三/" class="archive-article-date">
+  	<time datetime="2017-04-03T16:28:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="8-5-注册新用户"><a href="#8-5-注册新用户" class="headerlink" title="8.5 注册新用户"></a>8.5 注册新用户</h1><h2 id="8-5-1-添加用户注册表单"><a href="#8-5-1-添加用户注册表单" class="headerlink" title="8.5.1 添加用户注册表单"></a>8.5.1 添加用户注册表单</h2><ul>
+<li>app/auth/form 用户表单RegistrationForm</li>
+</ul>
+<ol>
+<li><p>email</p>
+<a id="more"></a>
+</li>
+<li><p>username:使用Regexp验证,确保username字段自包含字母,数字,下划线和点号.<figure class="highlight plain"><figcaption><span>0,</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&apos;Usernames must have only letters, &apos;</div><div class="line">&apos;numbers, dots or underscores&apos;)</div></pre></td></tr></table></figure></p>
+</li>
+<li><p>password:使用WTForms提供的EqualTo函数判断两次是否一致</p>
+</li>
+<li><p>password2:</p>
+</li>
+<li><p>submit</p>
+</li>
+<li><p>查询email是否注册过: validate_email</p>
+</li>
+<li><p>查询用户名是否注册过: validate_username</p>
+</li>
+<li><p>使用wtf.quick_form(form)传入前端</p>
+</li>
+<li><p>最后在login页面加入注册链接</p>
+</li>
+</ol>
+<h2 id="8-5-2-注册新用户"><a href="#8-5-2-注册新用户" class="headerlink" title="8.5.2 注册新用户"></a>8.5.2 注册新用户</h2><ul>
+<li>app/auth/view (‘/register’)</li>
+</ul>
+<ol>
+<li>email</li>
+<li>username</li>
+<li>password</li>
+<li>session.add</li>
+<li>flash(‘’)</li>
+<li>重定向到登录</li>
+</ol>
+<h1 id="8-6-确认账户"><a href="#8-6-确认账户" class="headerlink" title="8.6 确认账户"></a>8.6 确认账户</h1><p>验证电子邮件中的确认地址</p>
+<h2 id="8-6-1-使用itsdangerous生成确认令牌"><a href="#8-6-1-使用itsdangerous生成确认令牌" class="headerlink" title="8.6.1 使用itsdangerous生成确认令牌"></a>8.6.1 使用itsdangerous生成确认令牌</h2><p>TimedJSONWebSignatureSerializer类生成具有过期时间的JSON Web签名</p>
+<p>generate_confirmation_token() 方法生成一个令牌，有效期默认为一小时.confirm() 方 法检验令牌，如果检验通过，则把新添加的 confirmed 属性设为 True.</p>
+<p>除了检验令牌,confirm()方法还检查令牌中的id是否存储在current_user中的已登录用户匹配.如此一来,即使恶意用户知道如何生成签名令牌,也无法确认别人的账户.</p>
+<h2 id="8-6-2-发送确认邮件"><a href="#8-6-2-发送确认邮件" class="headerlink" title="8.6.2 发送确认邮件"></a>8.6.2 发送确认邮件</h2><p>当前的/register路由把新用户添加到数据库中后,会重定向到/index.在重定向之前,这个路由需要发送确认邮件.</p>
+<ul>
+<li>app/auth/view /register</li>
+<li>app/auth/view /confirm/<token></token></li>
+</ul>
+<ol>
+<li>login_required修饰器确保登陆后才能执行这个视图操作.</li>
+<li>由于令牌确认完全在User模型中完成,所以视图函数只需调用confirm()方法即可,然后再根据确认结果显示不同的Flash消息.确认成功后,User模型中confirm属性的值会被修改并添加到会话中,请求处理完后,这个操作被提交到数据库.</li>
+</ol>
+<ul>
+<li>app/auth/views 在before_app_request处理程序中过滤未确认的账户<br>同时满足以下三个条件,before_app_request处理程序会拦截请求.</li>
+</ul>
+<ol>
+<li>用户已登录(current_user.is_authenticated()必须返回True)</li>
+<li>用户的账户还未确认</li>
+<li>请求的端点(使用reuqest.endpoint获取)不在认证蓝本中.访问认证路由要获取权限,因为这些路由的作用是让用户确认账户或执行其他账户管理操作.</li>
+</ol>
+<h2 id="8-7-管理账户"><a href="#8-7-管理账户" class="headerlink" title="8.7 管理账户"></a>8.7 管理账户</h2><h2 id="8-7-1-修改密码"><a href="#8-7-1-修改密码" class="headerlink" title="8.7.1 修改密码"></a>8.7.1 修改密码</h2><ul>
+<li>app/auth/forms   ChangePasswordForm</li>
+</ul>
+<ol>
+<li>old_password:旧密码</li>
+<li>password:新密码</li>
+<li>password2:重输新密码</li>
+<li>submit</li>
+</ol>
+<ul>
+<li>app/auth/views    /change-password</li>
+</ul>
+<ol>
+<li>改完密码add一次current_user</li>
+<li>最后渲染auth/change_password.html</li>
+</ol>
+<ul>
+<li>app/templates/auth/change_password.html</li>
+</ul>
+<ol>
+<li>title</li>
+<li>col-md-4, wtf.quick_form(form)</li>
+</ol>
+<ul>
+<li>app/templates/base.html</li>
+</ul>
+<ol>
+<li>修改登出部分</li>
+</ol>
+<h2 id="8-7-2-重设密码"><a href="#8-7-2-重设密码" class="headerlink" title="8.7.2 重设密码"></a>8.7.2 重设密码</h2><ul>
+<li>app/auth/forms    PasswordResetRequestForm</li>
+</ul>
+<ol>
+<li>email</li>
+<li>submit</li>
+</ol>
+<ul>
+<li>app/auth/forms    PasswordRestForm</li>
+</ul>
+<ol>
+<li>email</li>
+<li>password</li>
+<li>password2</li>
+<li>submit</li>
+<li>validate_email</li>
+</ol>
+<ul>
+<li>app/auth/views    /reset</li>
+</ul>
+<ol>
+<li>password_reset_request()</li>
+<li>渲染auth/reset_password.html</li>
+</ol>
+<ul>
+<li>app/auth/view     /reset/<token></token></li>
+<li>app/model         </li>
+</ul>
+<ol>
+<li>generate_reset_token</li>
+<li>reset_password</li>
+</ol>
+<h2 id="8-7-3-修改电子邮件地址"><a href="#8-7-3-修改电子邮件地址" class="headerlink" title="8.7.3 修改电子邮件地址"></a>8.7.3 修改电子邮件地址</h2><ul>
+<li>app/auth/forms    ChangeEmailForm</li>
+</ul>
+<ol>
+<li>email</li>
+<li>password</li>
+<li>submit</li>
+<li>validate_email</li>
+</ol>
+<ul>
+<li>app/auth/views    /change-email</li>
+</ul>
+<ol>
+<li>@login_required:登录状态</li>
+<li>def change_email_request</li>
+</ol>
 
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://zlinxx.com/2017/04/04/Flask复习-八-用户认证-三/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2017/04/04/Flask复习-九-用户角色/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Flask复习 九 用户角色
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2017/04/04/Flask复习-八-用户认证-一/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Flask复习 八 用户认证(一)</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+    <div class="duoshuo"></div>
   
 
-    
+
 
 
           </div>
@@ -211,8 +454,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

@@ -6,17 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zlinxx.com">
-  <title>Archives: 2017/3 | zlinxx</title>
+  <title>Flask复习 五 数据库(二) | zlinxx</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="start from zero">
-<meta property="og:type" content="website">
-<meta property="og:title" content="zlinxx">
-<meta property="og:url" content="http://zlinxx.com/archives/2017/03/index.html">
+  <meta name="description" content="5.8 数据库操作5.8.1 创建表db.create_all()函数创建表123(venv) $ python hello.py shell&amp;gt;&amp;gt;&amp;gt; from hello import db&amp;gt;&amp;gt;&amp;gt; db.create_all()
+删除旧表使用函数123456&amp;lt;!-- more --&amp;gt;## 5.8.2 插入行在Flask-SQLAlchemy中,会话由">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flask复习 五 数据库(二)">
+<meta property="og:url" content="http://zlinxx.com/2017/04/04/Flask复习-五-数据库-二/index.html">
 <meta property="og:site_name" content="zlinxx">
-<meta property="og:description" content="start from zero">
+<meta property="og:description" content="5.8 数据库操作5.8.1 创建表db.create_all()函数创建表123(venv) $ python hello.py shell&amp;gt;&amp;gt;&amp;gt; from hello import db&amp;gt;&amp;gt;&amp;gt; db.create_all()
+删除旧表使用函数123456&amp;lt;!-- more --&amp;gt;## 5.8.2 插入行在Flask-SQLAlchemy中,会话由">
+<meta property="og:updated_time" content="2017-04-03T16:15:09.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="zlinxx">
-<meta name="twitter:description" content="start from zero">
+<meta name="twitter:title" content="Flask复习 五 数据库(二)">
+<meta name="twitter:description" content="5.8 数据库操作5.8.1 创建表db.create_all()函数创建表123(venv) $ python hello.py shell&amp;gt;&amp;gt;&amp;gt; from hello import db&amp;gt;&amp;gt;&amp;gt; db.create_all()
+删除旧表使用函数123456&amp;lt;!-- more --&amp;gt;## 5.8.2 插入行在Flask-SQLAlchemy中,会话由">
   
     <link rel="alternative" href="/atom.xml" title="zlinxx" type="application/atom+xml">
   
@@ -146,49 +150,234 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Flask复习-五-数据库-二" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/03/05/hexo部属个人blog成功/" class="archive-article-date">
-  	<time datetime="2017-03-05T11:01:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-05</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/03/05/hexo部属个人blog成功/">hexo部属个人blog成功</a>
+    <h1 class="article-title" itemprop="name">
+      Flask复习 五 数据库(二)
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2017/04/04/Flask复习-五-数据库-二/" class="archive-article-date">
+  	<time datetime="2017-04-03T16:14:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="5-8-数据库操作"><a href="#5-8-数据库操作" class="headerlink" title="5.8 数据库操作"></a>5.8 数据库操作</h1><h2 id="5-8-1-创建表"><a href="#5-8-1-创建表" class="headerlink" title="5.8.1 创建表"></a>5.8.1 创建表</h2><p>db.create_all()函数创建表<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">(venv) $ python hello.py shell</div><div class="line">&gt;&gt;&gt; from hello import db</div><div class="line">&gt;&gt;&gt; db.create_all()</div></pre></td></tr></table></figure></p>
+<p>删除旧表使用<figure class="highlight plain"><figcaption><span>函数</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&lt;!-- more --&gt;</div><div class="line"></div><div class="line">## 5.8.2 插入行</div><div class="line">在Flask-SQLAlchemy中,会话由db.session表示.</div><div class="line">准备把对象写入数据库之前,先要将其添加到会话中:</div></pre></td></tr></table></figure></p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>db.session.add(admin_role)<br>db.session.add(mod_role)<br>db.session.add(user_role)<br>db.session.add(user_john)<br>db.session.add(user_susan)<br>db.session.add(user_david)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">或者简写成:</div></pre></td></tr></table></figure></p>
+<p>db.session.add_all([admin_role, mod_role, user_role,<br>… user_john, user_susan, user_david])<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">然后调用commit()方法提交会话:</div></pre></td></tr></table></figure></p>
+<p>db.session.commit()<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">## 5.8.3 修改行</div><div class="line">调用add()方法也能更新模型</div><div class="line"></div><div class="line">## 5.8.4 删除行</div></pre></td></tr></table></figure></p>
+<p>db.session.delete(mod_role)<br>db.session.commit()<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">## 5.8.5 查询行</div><div class="line">Flask-SQLAlchemy为每个模型类都提供了query对象.</div><div class="line">所有记录:</div></pre></td></tr></table></figure></p>
+<p>Role.query.all()<br>User.query.all()<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">filter()过滤器可以配置query对象进行精确地数据库查询.</div><div class="line">若要查看SQLAlchemy为查询生成的原生SQL查询语句,只需把query对象转换成字符串:</div></pre></td></tr></table></figure></p>
+<p>str(User.query.filter_by(role=user_role))<br> ‘SELECT users.id AS users_id, users.username AS users_username,users.role_id AS users_role_id FROM users WHERE :param_1 = users.role_id’<br>```</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>常用的SQLAlchemy查询过滤器</p>
+<table>
+<thead>
+<tr>
+<th>过滤器</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>filter()</td>
+<td>把过滤器添加到原查询上，返回一个新查询</td>
+</tr>
+<tr>
+<td>filter_by()</td>
+<td>把等值过滤器添加到原查询上，返回一个新查询</td>
+</tr>
+<tr>
+<td>limit()</td>
+<td>使用指定的值限制原查询返回的结果数量，返回一个新查询</td>
+</tr>
+<tr>
+<td>offset()</td>
+<td>偏移原查询返回的结果，返回一个新查询</td>
+</tr>
+<tr>
+<td>order_by()</td>
+<td>根据指定条件对原查询结果进行排序，返回一个新查询</td>
+</tr>
+<tr>
+<td>group_by()</td>
+<td>根据指定条件对原查询结果进行排序,返回一个新查询</td>
+</tr>
+</tbody>
+</table>
+<p>常用的SQLAlchemy查询执行函数</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>all()</td>
+<td>以列表形式返回查询的所有结果</td>
+</tr>
+<tr>
+<td>first()</td>
+<td>返回查询的第一个结果，如果没有结果，则返回 None</td>
+</tr>
+<tr>
+<td>first_or_404()</td>
+<td>返回查询的第一个结果，如果没有结果，则终止请求,返回404错误响应</td>
+</tr>
+<tr>
+<td>get()</td>
+<td>返回指定主键对应的行，如果没有对应的行，则返回 None</td>
+</tr>
+<tr>
+<td>get_or_404()</td>
+<td>返回指定主键对应的行，如果没有对应的行，则终止请求,返回404错误响应</td>
+</tr>
+<tr>
+<td>count()</td>
+<td>返回查询结果的数量</td>
+</tr>
+<tr>
+<td>paginate()</td>
+<td>返回一个Paginate对象,它包含指定范围内的结果</td>
+</tr>
+</tbody>
+</table>
 
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://zlinxx.com/2017/04/04/Flask复习-五-数据库-二/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2017/04/04/Flask复习-五-数据库-三/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Flask复习 五 数据库(三)
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2017/04/04/Flask复习-五-数据库/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Flask复习 五 数据库</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+    <div class="duoshuo"></div>
   
 
-    
+
 
 
           </div>
@@ -211,8 +400,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

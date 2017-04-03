@@ -6,17 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zlinxx.com">
-  <title>Archives: 2017/3 | zlinxx</title>
+  <title>Flask复习 十三 用户评论 | zlinxx</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="start from zero">
-<meta property="og:type" content="website">
-<meta property="og:title" content="zlinxx">
-<meta property="og:url" content="http://zlinxx.com/archives/2017/03/index.html">
+  <meta name="description" content="13.1 评论在数据库中的表示
+评论属于某篇博客文章,因此定义了一个从posts表到commetns表的一对多关系.使用这个关系可以获取膜片特定博客文章的评论列表.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flask复习 十三 用户评论">
+<meta property="og:url" content="http://zlinxx.com/2017/04/04/Flask复习-十三-用户评论/index.html">
 <meta property="og:site_name" content="zlinxx">
-<meta property="og:description" content="start from zero">
+<meta property="og:description" content="13.1 评论在数据库中的表示
+评论属于某篇博客文章,因此定义了一个从posts表到commetns表的一对多关系.使用这个关系可以获取膜片特定博客文章的评论列表.">
+<meta property="og:updated_time" content="2017-04-03T16:34:49.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="zlinxx">
-<meta name="twitter:description" content="start from zero">
+<meta name="twitter:title" content="Flask复习 十三 用户评论">
+<meta name="twitter:description" content="13.1 评论在数据库中的表示
+评论属于某篇博客文章,因此定义了一个从posts表到commetns表的一对多关系.使用这个关系可以获取膜片特定博客文章的评论列表.">
   
     <link rel="alternative" href="/atom.xml" title="zlinxx" type="application/atom+xml">
   
@@ -146,49 +150,185 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Flask复习-十三-用户评论" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/03/05/hexo部属个人blog成功/" class="archive-article-date">
-  	<time datetime="2017-03-05T11:01:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-05</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/03/05/hexo部属个人blog成功/">hexo部属个人blog成功</a>
+    <h1 class="article-title" itemprop="name">
+      Flask复习 十三 用户评论
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2017/04/04/Flask复习-十三-用户评论/" class="archive-article-date">
+  	<time datetime="2017-04-03T16:33:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="13-1-评论在数据库中的表示"><a href="#13-1-评论在数据库中的表示" class="headerlink" title="13.1 评论在数据库中的表示"></a>13.1 评论在数据库中的表示</h1><ul>
+<li><p>评论属于某篇博客文章,因此定义了一个从posts表到commetns表的一对多关系.使用这个关系可以获取膜片特定博客文章的评论列表.</p>
+<a id="more"></a>
+</li>
+<li><p>comments表还和user表之间有一对多关系.通过这个关系可以获取用户发表的所有评论们还能间接知道用户发表了多少篇评论.</p>
+</li>
+<li><p>Comments模型:app/models.Comment</p>
+</li>
+</ul>
+<ol>
+<li>几乎和Post模型一样,不过多了一个disabled字段.这是个布尔值字段,协管员通过这个字段查禁不当评论.</li>
+<li>和博客文章一样,评论也定义了一个事件,在修改body字段时触发,自动把Markdown文本转换成HTML.</li>
+<li>转换过程和博客文章一样,不过评论相对较短,而且对Markdown中允许使用的HTML标签要求更严格,要删除与段落相关的标签,只留下格式化字符的标签.</li>
+</ol>
+<h1 id="13-2-提交和显示评论"><a href="#13-2-提交和显示评论" class="headerlink" title="13.2 提交和显示评论"></a>13.2 提交和显示评论</h1><ul>
+<li>评论输入表单:app/main/forms</li>
+</ul>
+<ol>
+<li>body:StringField</li>
+<li>submit()</li>
+</ol>
+<ul>
+<li>支持博客文章评论</li>
+</ul>
+<h1 id="13-3-管理评论"><a href="#13-3-管理评论" class="headerlink" title="13.3 管理评论"></a>13.3 管理评论</h1><ul>
+<li>在导航栏中加入管理评论链接:base.html</li>
+</ul>
+<ol>
+<li>MODERATE_COMMENTS管理评论权限</li>
+</ol>
+<ul>
+<li>管理评论的路由:app/main/views</li>
+</ul>
+<ol>
+<li>从数据库中读取一页评论,将其传入模板进行渲染.除了评论列表之外,还把分页对象和当前页数传入了模板.</li>
+</ol>
+<ul>
+<li>评论管理页面的模板:moderate.html</li>
+</ul>
 
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://zlinxx.com/2017/04/04/Flask复习-十三-用户评论/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2017/04/04/Flask复习-十四-应用编程接口/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Flask复习 十四 应用编程接口
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2017/04/04/Flask复习十二-关注者/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Flask复习十二 关注者</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+    <div class="duoshuo"></div>
   
 
-    
+
 
 
           </div>
@@ -211,8 +351,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

@@ -6,17 +6,54 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zlinxx.com">
-  <title>Archives: 2017/3 | zlinxx</title>
+  <title>Flask复习 十 用户资料 | zlinxx</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="start from zero">
-<meta property="og:type" content="website">
-<meta property="og:title" content="zlinxx">
-<meta property="og:url" content="http://zlinxx.com/archives/2017/03/index.html">
+  <meta name="description" content="10.1 资料信息
+app/models 用户信息字段
+
+
+name:真实姓名
+
+location:所在地
+
+about_me:自我介绍
+
+member_since:注册日期
+
+last_seen:最后访问日期">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flask复习 十 用户资料">
+<meta property="og:url" content="http://zlinxx.com/2017/04/04/Flask复习-十-用户资料/index.html">
 <meta property="og:site_name" content="zlinxx">
-<meta property="og:description" content="start from zero">
+<meta property="og:description" content="10.1 资料信息
+app/models 用户信息字段
+
+
+name:真实姓名
+
+location:所在地
+
+about_me:自我介绍
+
+member_since:注册日期
+
+last_seen:最后访问日期">
+<meta property="og:updated_time" content="2017-04-03T16:30:28.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="zlinxx">
-<meta name="twitter:description" content="start from zero">
+<meta name="twitter:title" content="Flask复习 十 用户资料">
+<meta name="twitter:description" content="10.1 资料信息
+app/models 用户信息字段
+
+
+name:真实姓名
+
+location:所在地
+
+about_me:自我介绍
+
+member_since:注册日期
+
+last_seen:最后访问日期">
   
     <link rel="alternative" href="/atom.xml" title="zlinxx" type="application/atom+xml">
   
@@ -146,49 +183,225 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Flask复习-十-用户资料" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/03/05/hexo部属个人blog成功/" class="archive-article-date">
-  	<time datetime="2017-03-05T11:01:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-05</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/03/05/hexo部属个人blog成功/">hexo部属个人blog成功</a>
+    <h1 class="article-title" itemprop="name">
+      Flask复习 十 用户资料
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2017/04/04/Flask复习-十-用户资料/" class="archive-article-date">
+  	<time datetime="2017-04-03T16:30:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="10-1-资料信息"><a href="#10-1-资料信息" class="headerlink" title="10.1 资料信息"></a>10.1 资料信息</h1><ol>
+<li>app/models 用户信息字段</li>
+</ol>
+<ul>
+<li><p>name:真实姓名</p>
+</li>
+<li><p>location:所在地</p>
+</li>
+<li><p>about_me:自我介绍</p>
+</li>
+<li><p>member_since:注册日期</p>
+</li>
+<li><p>last_seen:最后访问日期</p>
+<a id="more"></a>
+</li>
+</ul>
+<ol>
+<li>app/models 刷新用户最后访问时间</li>
+</ol>
+<ul>
+<li>ping()方法,设置last_seen为datetime.utcnow()</li>
+</ul>
+<ol>
+<li>app/ayth/views 更新已登录用户的访问时间</li>
+</ol>
+<ul>
+<li>before_app_request处理程序会在每次请求前运行</li>
+</ul>
+<h1 id="10-2-用户资料页面"><a href="#10-2-用户资料页面" class="headerlink" title="10.2 用户资料页面"></a>10.2 用户资料页面</h1><ol>
+<li>资料页面的路由 app/main/views</li>
+</ol>
+<ul>
+<li>/user/<username></username></li>
+</ul>
+<h1 id="10-3-资料编辑器"><a href="#10-3-资料编辑器" class="headerlink" title="10.3 资料编辑器"></a>10.3 资料编辑器</h1><h2 id="10-3-1-用户级别的资料编辑器"><a href="#10-3-1-用户级别的资料编辑器" class="headerlink" title="10.3.1 用户级别的资料编辑器"></a>10.3.1 用户级别的资料编辑器</h2><ol>
+<li>资料编辑表单 app/main/forms  : EditProfileForm</li>
+</ol>
+<ul>
+<li>name</li>
+<li>location</li>
+<li>about_me</li>
+<li>submit</li>
+</ul>
+<ol>
+<li>资料编辑路由 app/main/views : enit_profiles()</li>
+</ol>
+<ul>
+<li>把初始值赋值给form.<field-name>.data完成的</field-name></li>
+</ul>
+<h2 id="10-3-2-管理员级别的资料编辑器"><a href="#10-3-2-管理员级别的资料编辑器" class="headerlink" title="10.3.2 管理员级别的资料编辑器"></a>10.3.2 管理员级别的资料编辑器</h2><ol>
+<li>管理员使用的资料编辑表单  app/main/forms  EditProfileAdminForm</li>
+</ol>
+<ul>
+<li>email</li>
+<li>username</li>
+<li>confirmed</li>
+<li>role</li>
+<li>name</li>
+<li>location</li>
+<li>about_me</li>
+<li>submit</li>
+</ul>
+<ol>
+<li>管理员的资料编辑路由     app/main/views  /edit-profile/<int:id></int:id></li>
+</ol>
+<h1 id="10-4-用户头像"><a href="#10-4-用户头像" class="headerlink" title="10.4 用户头像"></a>10.4 用户头像</h1><p>Gravatar提供的用户头像,生成头像的URL时,要计算电子邮件的MD5散列值.生成头像的URL是在<a href="http://www.gravatar.com/avatar/或https://secure.gravatar.com/avatar/之后加上这个MD5散列值" target="_blank" rel="external">http://www.gravatar.com/avatar/或https://secure.gravatar.com/avatar/之后加上这个MD5散列值</a>.</p>
+<ol>
+<li>生成Gravatar URL:app/models.User</li>
+</ol>
+<ul>
+<li>def gravatar()</li>
+</ul>
+<ol>
+<li>使用缓存的MD5散列值生成Gravatar URL: app/models</li>
+</ol>
+<ul>
+<li>添加字段avatar_hash</li>
+<li>​</li>
+</ul>
 
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://zlinxx.com/2017/04/04/Flask复习-十-用户资料/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2017/04/04/Flask复习-十一-博客文章-一/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Flask复习 十一 博客文章(一)
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2017/04/04/Flask复习-九-用户角色/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Flask复习 九 用户角色</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+    <div class="duoshuo"></div>
   
 
-    
+
 
 
           </div>
@@ -211,8 +424,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
