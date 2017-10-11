@@ -148,6 +148,120 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-第一章-用Pythonic方式来思考" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/11/第一章-用Pythonic方式来思考/">第一章-用Pythonic方式来思考</a>
+    </h1>
+  
+
+        
+        <a href="/2017/10/11/第一章-用Pythonic方式来思考/" class="archive-article-date">
+  	<time datetime="2017-10-10T16:27:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Pythonic是完成Python编程工作的最佳方式</p>
+<h1 id="第1条-确认自己所用的python版本"><a href="#第1条-确认自己所用的python版本" class="headerlink" title="第1条: 确认自己所用的python版本"></a>第1条: 确认自己所用的python版本</h1><p>本机为例:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">python --version</div><div class="line">Python 2.7.10</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">python3 --version</div><div class="line">Python 3.6.2</div></pre></td></tr></table></figure>
+<p>Python2与3选择暂时不做讨论,本人项目已经开始用python3编写.</p>
+<h1 id="第2条-遵循PEP8风格指南"><a href="#第2条-遵循PEP8风格指南" class="headerlink" title="第2条:遵循PEP8风格指南"></a>第2条:遵循PEP8风格指南</h1><h2 id="空白-空格"><a href="#空白-空格" class="headerlink" title="空白(空格)"></a>空白(空格)</h2><ul>
+<li>使用空格而不是tab</li>
+<li>每一层缩进都用4个空格来表示</li>
+<li>每行的字符数不应超过79</li>
+<li>多行长表达式,除首行外其余各行都应该在通常缩进级别上再加4个空格</li>
+<li>函数与类之间应该用两个空行隔开</li>
+<li>在同一个类中,各方法之间应该用一个空行隔开</li>
+<li>在使用下标来获取列表元素,调用函数或给关键字参数赋值的时候,不要在两旁添加空格</li>
+<li>变量赋值的时候,赋值符号的左右两侧应该各自写上一个空格</li>
+</ul>
+<h2 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h2><ul>
+<li>函数,变量,属性全部小写字母,各单词之间以下划线相连</li>
+<li>受保护的实例属性应该以单个下划线开头</li>
+<li>私有的实例属性,应该以两个下划线开头</li>
+<li>类与异常,应该以每个单词首字母均大写的形式来命名</li>
+<li>模块级别的常量,全部大写</li>
+<li>类中的实例方法,应该把首个参数命名为self,以表示该对象自身</li>
+<li>类方法的首个参数,应该命名为cls,以表示该类自身</li>
+</ul>
+<h2 id="表达式和语句"><a href="#表达式和语句" class="headerlink" title="表达式和语句"></a>表达式和语句</h2><ul>
+<li>否定词要内联在表达式,不要在表达式外面</li>
+<li>不要用<code>len(somelist) == 0</code> 这种方式来判断somelist是否为空,二食应该采用if not somelist这种写法来判断,他会假定:空值将自动评估为False</li>
+<li>检测somelist是否为非空时,也应该使用<code>if somelist</code> 这种写法来判断</li>
+<li>不要编写单行的if,for,while,except复合语句,而是应该把这些语句分成多行来书写,以示清晰</li>
+<li>import语句应该总是放在文件开头</li>
+<li>引入模块时,总是应该使用绝对名称</li>
+<li>import语句应该按顺序分成三个部分,标准库,第三方,自用.在每一部分中,各import语句应该按模块的字母顺序来排列.</li>
+</ul>
+<h1 id="第3条-了解bytes-str与unicode的区别"><a href="#第3条-了解bytes-str与unicode的区别" class="headerlink" title="第3条: 了解bytes,str与unicode的区别"></a>第3条: 了解bytes,str与unicode的区别</h1><h2 id="Python2"><a href="#Python2" class="headerlink" title="Python2"></a>Python2</h2><ul>
+<li>str:原始的8位值                <code>decode(str)</code></li>
+<li>unicode:Unicode字符串         <code>encode(unicode)</code></li>
+<li>str只包含7位ASCII字符,那么unicode和str实例几乎成了同一种类型,Python3中绝对禁止</li>
+</ul>
+<h2 id="Python3"><a href="#Python3" class="headerlink" title="Python3"></a>Python3</h2><ul>
+<li>bytes:原始的8位值             <code>decode(bytes)</code></li>
+<li>str:unicode字符                        <code>encode(str)</code></li>
+<li>如果使用open获取了文件句柄,该句柄默认采用UTF-8编码格式来操作文件.原因在于Python3给open函数添加了名为encoding的新参数,并且默认值为UTF-8,这样open(**, w)的时候必须传入Unicode字符的str实例,而不接受bytes.解决方法为使用wb/rb,二进制写入/读取模式,并且可以同时适配Python2和3.</li>
+</ul>
+<p>编码与解码的操作一定要在最外围做,并且保证程序的核心部分使用Unicode(Python2中的unicode, Python3中的str)</p>
+<h2 id="辅助函数"><a href="#辅助函数" class="headerlink" title="辅助函数:"></a>辅助函数:</h2><h3 id="Python2-1"><a href="#Python2-1" class="headerlink" title="Python2:"></a>Python2:</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">to_unicode</span><span class="params">(unicode_or_str)</span>:</span></div><div class="line">  </div><div class="line">  </div><div class="line">  </div><div class="line">  </div><div class="line">  </div><div class="line">  </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">to_str</span><span class="params">(unicode_or_str)</span>:</span></div></pre></td></tr></table></figure>
+<h3 id="Python3-1"><a href="#Python3-1" class="headerlink" title="Python3:"></a>Python3:</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">to_str</span><span class="params">(bytes_or_str)</span>:</span></div><div class="line">  </div><div class="line">  </div><div class="line">  </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">to_bytes</span><span class="params">(bytes_or_str)</span>:</span></div></pre></td></tr></table></figure>
+<h1 id="第4条-用辅助函数来取代复杂的表达式"><a href="#第4条-用辅助函数来取代复杂的表达式" class="headerlink" title="第4条 用辅助函数来取代复杂的表达式"></a>第4条 用辅助函数来取代复杂的表达式</h1><h2 id="1-不要滥用语法特性"><a href="#1-不要滥用语法特性" class="headerlink" title="1. 不要滥用语法特性"></a>1. 不要滥用语法特性</h2><h2 id="2-复杂的表达式放入辅助函数中"><a href="#2-复杂的表达式放入辅助函数中" class="headerlink" title="2. 复杂的表达式放入辅助函数中"></a>2. 复杂的表达式放入辅助函数中</h2><h2 id="3-if-else要比or或and这样的Boolean操作符写成的表达式更加清晰-if-else-gt-gt-or-and"><a href="#3-if-else要比or或and这样的Boolean操作符写成的表达式更加清晰-if-else-gt-gt-or-and" class="headerlink" title="3. if/else要比or或and这样的Boolean操作符写成的表达式更加清晰(if/else   &gt;&gt;   or, and)"></a>3. if/else要比or或and这样的Boolean操作符写成的表达式更加清晰(if/else   &gt;&gt;   or, and)</h2><h1 id="第5条-了解切割序列的办法"><a href="#第5条-了解切割序列的办法" class="headerlink" title="第5条 了解切割序列的办法"></a>第5条 了解切割序列的办法</h1><h2 id="1-切割列表时-即便start或end索引越界也不会出现问题-下标访问单个元素时会报错"><a href="#1-切割列表时-即便start或end索引越界也不会出现问题-下标访问单个元素时会报错" class="headerlink" title="1. 切割列表时,即便start或end索引越界也不会出现问题,下标访问单个元素时会报错"></a>1. 切割列表时,即便start或end索引越界也不会出现问题,下标访问单个元素时会报错</h2><h2 id="2-对原列表进行切割之后-会产生一份全新的列表-在切割得到的新列表上进行修改-不会影响原列表"><a href="#2-对原列表进行切割之后-会产生一份全新的列表-在切割得到的新列表上进行修改-不会影响原列表" class="headerlink" title="2. 对原列表进行切割之后,会产生一份全新的列表,在切割得到的新列表上进行修改,不会影响原列表"></a>2. 对原列表进行切割之后,会产生一份全新的列表,在切割得到的新列表上进行修改,不会影响原列表</h2><h2 id="3-在赋值时对左侧列表使用切割操作-会把该列表中处在制定范围内的对象替换为新值-位于切片范围外的那些值都保留不变-列表会根据新值的个数相应的扩张或者收缩"><a href="#3-在赋值时对左侧列表使用切割操作-会把该列表中处在制定范围内的对象替换为新值-位于切片范围外的那些值都保留不变-列表会根据新值的个数相应的扩张或者收缩" class="headerlink" title="3.在赋值时对左侧列表使用切割操作,会把该列表中处在制定范围内的对象替换为新值.位于切片范围外的那些值都保留不变,列表会根据新值的个数相应的扩张或者收缩."></a>3.在赋值时对左侧列表使用切割操作,会把该列表中处在制定范围内的对象替换为新值.位于切片范围外的那些值都保留不变,列表会根据新值的个数相应的扩张或者收缩.</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">a = [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>, <span class="string">'e'</span>, <span class="string">'f'</span>, <span class="string">'g'</span>, <span class="string">'h'</span>]</div><div class="line">a[<span class="number">2</span>:<span class="number">7</span>] = [<span class="number">99</span>, <span class="number">24</span>, <span class="number">14</span>]</div><div class="line"><span class="keyword">print</span> a </div><div class="line">&gt;&gt;&gt;</div><div class="line">[<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="number">99</span>, <span class="number">24</span>, <span class="number">14</span>]</div></pre></td></tr></table></figure>
+<h2 id="4-起止索引都留空-就会产生一份原列表的拷贝-赋值左侧使用这种切片-系统会把右侧的值复制一份-并用这份拷贝来替换左侧列表的全部内容-而不会分配新列表"><a href="#4-起止索引都留空-就会产生一份原列表的拷贝-赋值左侧使用这种切片-系统会把右侧的值复制一份-并用这份拷贝来替换左侧列表的全部内容-而不会分配新列表" class="headerlink" title="4.起止索引都留空,就会产生一份原列表的拷贝.赋值左侧使用这种切片,系统会把右侧的值复制一份,并用这份拷贝来替换左侧列表的全部内容,而不会分配新列表."></a>4.起止索引都留空,就会产生一份原列表的拷贝.赋值左侧使用这种切片,系统会把右侧的值复制一份,并用这份拷贝来替换左侧列表的全部内容,而不会分配新列表.</h2><h1 id="第6条-单次切片中不要同时指定start-end和stride"><a href="#第6条-单次切片中不要同时指定start-end和stride" class="headerlink" title="第6条 单次切片中不要同时指定start,end和stride"></a>第6条 单次切片中不要同时指定start,end和stride</h1><h2 id="1-使用步进sride时-尽量省略写start和end-同时尽量用正值"><a href="#1-使用步进sride时-尽量省略写start和end-同时尽量用正值" class="headerlink" title="1. 使用步进sride时,尽量省略写start和end,同时尽量用正值."></a>1. 使用步进sride时,尽量省略写start和end,同时尽量用正值.</h2><h2 id="2-先步进式切片-把切割结果赋值给某个变量-再在这个变量上二次切割"><a href="#2-先步进式切片-把切割结果赋值给某个变量-再在这个变量上二次切割" class="headerlink" title="2. 先步进式切片,把切割结果赋值给某个变量,再在这个变量上二次切割"></a>2. 先步进式切片,把切割结果赋值给某个变量,再在这个变量上二次切割</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">b = a[::<span class="number">2</span>]</div><div class="line">c = b[<span class="number">1</span>:<span class="number">-1</span>]</div></pre></td></tr></table></figure>
+<h2 id="3-由于执行时间或者空间很严格-不得不用一次切割的话-选择itertools模块中的islide方法-这个方法不允许start-end-stride为负值"><a href="#3-由于执行时间或者空间很严格-不得不用一次切割的话-选择itertools模块中的islide方法-这个方法不允许start-end-stride为负值" class="headerlink" title="3. 由于执行时间或者空间很严格,不得不用一次切割的话,选择itertools模块中的islide方法,这个方法不允许start,end,stride为负值"></a>3. 由于执行时间或者空间很严格,不得不用一次切割的话,选择itertools模块中的islide方法,这个方法不允许start,end,stride为负值</h2><h1 id="第7条-用列表推导来取代map和filter"><a href="#第7条-用列表推导来取代map和filter" class="headerlink" title="第7条 用列表推导来取代map和filter"></a>第7条 用列表推导来取代map和filter</h1><p>列表推导要比内置的map和filter函数清晰,因为它无需额外编写lambda表达式</p>
+<p>字典(dict)和集(set)也支持推导表达式</p>
+<h1 id="第8条-不要使用含有两个以上表达式的列表推导"><a href="#第8条-不要使用含有两个以上表达式的列表推导" class="headerlink" title="第8条 不要使用含有两个以上表达式的列表推导"></a>第8条 不要使用含有两个以上表达式的列表推导</h1><p>代码首先是写给人看的,只是凑巧能被顺利的执行而已</p>
+<h1 id="第9条-用生成器表达式来改写数据量较大的列表推导"><a href="#第9条-用生成器表达式来改写数据量较大的列表推导" class="headerlink" title="第9条 用生成器表达式来改写数据量较大的列表推导"></a>第9条 用生成器表达式来改写数据量较大的列表推导</h1><ol>
+<li>当输入的数据量较大时,列表推导可能会因为占用太多内存而出问题</li>
+<li>把实现列表推导那种写法放在一对圆括号中,就构成了生成器表达式,逐次调用next,即可按照生成器表达式来输出下一个值.</li>
+</ol>
+<p>逐次产生输出值,从而避免了内存用量问题.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 列表推导式</span></div><div class="line">value = [len(x) <span class="keyword">for</span> x <span class="keyword">in</span> open(<span class="string">'/tmp/my_file.txt'</span>)]</div><div class="line"></div><div class="line"><span class="comment"># 生成器表达式</span></div><div class="line">it = (len(x) <span class="keyword">for</span> x <span class="keyword">in</span> open(<span class="string">'tm[/my_file.txt]'</span>))</div><div class="line">print(it)</div><div class="line">&gt;&gt;&gt;</div><div class="line">&lt;generator object &lt;genexpr&gt; at <span class="number">0x101b81480</span>&gt;   <span class="comment"># 返回一个生成器</span></div></pre></td></tr></table></figure>
+<ol>
+<li>生成器的另一个好处就是可以互相组合</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">roots = ((x, x**<span class="number">0.5</span>) <span class="keyword">for</span> x <span class="keyword">in</span> it)</div></pre></td></tr></table></figure>
+<ol>
+<li>要注意的是,由生成器表达式所返回的哪个迭代器是有状态的,用过一段时间后,就不要反复使用了.</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/10/11/第一章-用Pythonic方式来思考/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-Flask复习-十四-应用编程接口" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -650,60 +764,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/04/04/Flask复习-八-用户认证-一/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-Flask复习-八-用户认证-二" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/04/Flask复习-八-用户认证-二/">Flask复习 八 用户认证(二)</a>
-    </h1>
-  
-
-        
-        <a href="/2017/04/04/Flask复习-八-用户认证-二/" class="archive-article-date">
-  	<time datetime="2017-04-03T16:20:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="8-4-使用Flask-Login认证用户"><a href="#8-4-使用Flask-Login认证用户" class="headerlink" title="8.4 使用Flask-Login认证用户"></a>8.4 使用Flask-Login认证用户</h1><h2 id="8-4-1-准备用于登陆的用户模型"><a href="#8-4-1-准备用于登陆的用户模型" class="headerlink" title="8.4.1 准备用于登陆的用户模型"></a>8.4.1 准备用于登陆的用户模型</h2><ol>
-<li><p><strong>model</strong>:要使用Flask-Login,User Model必须实现几个方法.<br>可以直接写出来,但是Flask-Login提供了一个UserMixin类,包含这几个方法的默认实现,且能满足大多数需求.</p>
-        
-          <a class="article-more-a" href="/2017/04/04/Flask复习-八-用户认证-二/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/04/Flask复习-八-用户认证-二/">展开全文 >></a>
         </p>
       
 
