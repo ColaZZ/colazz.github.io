@@ -28,7 +28,7 @@ Python2与3选择暂时不做讨论,本人项目已经开始用python3编写.
 第2条:遵循PEP8风格指南空白(空格)
 使用空格而不是tab
 每一层缩进都用4个空格来表">
-<meta property="og:updated_time" content="2017-10-11T16:20:25.000Z">
+<meta property="og:updated_time" content="2017-10-12T16:56:09.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第一章-用Pythonic方式来思考">
 <meta name="twitter:description" content="Pythonic是完成Python编程工作的最佳方式
@@ -251,6 +251,58 @@ Python2与3选择暂时不做讨论,本人项目已经开始用python3编写.
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">roots = ((x, x**<span class="number">0.5</span>) <span class="keyword">for</span> x <span class="keyword">in</span> it)</div></pre></td></tr></table></figure>
 <ol>
 <li>要注意的是,由生成器表达式所返回的哪个迭代器是有状态的,用过一段时间后,就不要反复使用了.</li>
+</ol>
+<h1 id="第10条-尽量用enumerate取代range"><a href="#第10条-尽量用enumerate取代range" class="headerlink" title="第10条 尽量用enumerate取代range"></a>第10条 尽量用enumerate取代range</h1><ul>
+<li>enumerate可以把各种迭代器包装为生成器,以便稍后产生输出值.</li>
+<li>enumerate生成器每次产生一对输出值,前者表示循环下标,后者表示迭代器中获取的下一个序列元素</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">falvor_list = [<span class="string">'vanilla'</span>, <span class="string">'choc'</span>, <span class="string">'pecan'</span>, <span class="string">'士多啤梨'</span>]</div><div class="line"><span class="keyword">for</span> i, flavor <span class="keyword">in</span> enumerate(flavor_list):</div><div class="line">    print(<span class="string">'%d: %s'</span> % (i+<span class="number">1</span>, flavor))</div><div class="line">&gt;&gt;&gt;</div><div class="line"><span class="number">1</span>: vanilla</div><div class="line"><span class="number">2</span>: choc</div><div class="line"><span class="number">3</span>: pecan</div><div class="line"><span class="number">4</span>: 士多啤梨</div></pre></td></tr></table></figure>
+<ul>
+<li>还可以直接指定enumerate函数开始计数的值,可以使代码更简练</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> i, flavor <span class="keyword">in</span> enumerate(flavor_list, <span class="number">1</span>):</div><div class="line">    print(<span class="string">'%d: %s'</span> % (i+<span class="number">1</span>, flavor))</div></pre></td></tr></table></figure>
+<h1 id="第11条-用zip函数同时遍历两个迭代器"><a href="#第11条-用zip函数同时遍历两个迭代器" class="headerlink" title="第11条 用zip函数同时遍历两个迭代器"></a>第11条 用zip函数同时遍历两个迭代器</h1><ol>
+<li>Python3</li>
+</ol>
+<ul>
+<li>zip函数可以把两个或者两个以上的迭代器封装为生成器</li>
+<li>注意:输入的迭代器长度不同,只要有一个耗尽,zip就不再产生tuple了</li>
+<li>不能确定多个迭代器是否等长,可以使用itertools中的zip_longest</li>
+</ul>
+<ol>
+<li>Python2</li>
+</ol>
+<ul>
+<li>zip不是生成器,同等效果可用itertools中的izip</li>
+<li>同样不等长可以使用iteritools中的izip_longest</li>
+</ul>
+<h1 id="第12条-不要在for和while循环后面写else块"><a href="#第12条-不要在for和while循环后面写else块" class="headerlink" title="第12条 不要在for和while循环后面写else块"></a>第12条 不要在for和while循环后面写else块</h1><ul>
+<li>for后面的else块会在for正常执行之后立刻运行</li>
+<li>反而for中遇到break提前跳出,会导致程序不执行else块</li>
+<li>不要在for/while后面写else块.这样不直观,容易误解.</li>
+</ul>
+<p>两种正确写法:</p>
+<ol>
+<li>只要发现参数符合条件,就立刻return.遍历一次没有符合条件的,就返回默认值</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">coprime</span><span class="params">(a, b)</span>:</span></div><div class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>, min(a, b)+<span class="number">1</span>):</div><div class="line">    <span class="keyword">if</span> a % i == <span class="number">0</span> <span class="keyword">and</span> b % i == <span class="number">0</span>:</div><div class="line">      <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">  <span class="keyword">return</span> <span class="keyword">True</span></div></pre></td></tr></table></figure>
+<ol>
+<li>用变量来记录参数是否符合,一旦符合,立刻break</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">coprime2</span><span class="params">(a, b)</span>:</span></div><div class="line">  is_coprime = <span class="keyword">True</span></div><div class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>, min(a, b)+<span class="number">1</span>):</div><div class="line">    <span class="keyword">if</span> a % i == <span class="number">0</span> <span class="keyword">and</span> b % i == <span class="number">0</span>:</div><div class="line">      is_coprime = <span class="keyword">False</span></div><div class="line">      <span class="keyword">break</span></div><div class="line">  <span class="keyword">return</span> <span class="keyword">False</span></div></pre></td></tr></table></figure>
+<h1 id="第13条-合理利用try-except-else-finally结构中的每个代码块"><a href="#第13条-合理利用try-except-else-finally结构中的每个代码块" class="headerlink" title="第13条 合理利用try/except/else/finally结构中的每个代码块"></a>第13条 合理利用try/except/else/finally结构中的每个代码块</h1><ol>
+<li><p>finally块</p>
+<p>向上传播,发生异常时执行清理工作,可以使用finally块.</p>
+<p>finally常见的用途就是确保程序能够可靠地关闭文件句柄</p>
+</li>
+<li><p>else块</p>
+</li>
+</ol>
+<p>   如果try块没有异常,那就执行else块,可以缩减try内容</p>
+<ol>
+<li><p>混合使用</p>
+<p>try读取文件并处理其内容,excpet应对异常,else实时更新文件,finally清理句柄</p>
+</li>
 </ol>
 
       
