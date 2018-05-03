@@ -148,6 +148,120 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Flask复习-九-用户角色" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/04/Flask复习-九-用户角色/">Flask复习 九 用户角色</a>
+    </h1>
+  
+
+        
+        <a href="/2017/04/04/Flask复习-九-用户角色/" class="archive-article-date">
+  	<time datetime="2017-04-03T16:29:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="9-1-角色在数据库中的表示"><a href="#9-1-角色在数据库中的表示" class="headerlink" title="9.1 角色在数据库中的表示"></a>9.1 角色在数据库中的表示</h1><ul>
+<li>app/models</li>
+</ul>
+<ol>
+<li><p>default:只有一个角色的default字段要设为True,其他都设为False.注册时便分配.</p>
+        
+          <a class="article-more-a" href="/2017/04/04/Flask复习-九-用户角色/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/04/04/Flask复习-九-用户角色/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-Flask复习-八-用户认证-三" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/04/Flask复习-八-用户认证-三/">Flask复习 八 用户认证(三)</a>
+    </h1>
+  
+
+        
+        <a href="/2017/04/04/Flask复习-八-用户认证-三/" class="archive-article-date">
+  	<time datetime="2017-04-03T16:28:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="8-5-注册新用户"><a href="#8-5-注册新用户" class="headerlink" title="8.5 注册新用户"></a>8.5 注册新用户</h1><h2 id="8-5-1-添加用户注册表单"><a href="#8-5-1-添加用户注册表单" class="headerlink" title="8.5.1 添加用户注册表单"></a>8.5.1 添加用户注册表单</h2><ul>
+<li>app/auth/form 用户表单RegistrationForm</li>
+</ul>
+<ol>
+<li><p>email</p>
+        
+          <a class="article-more-a" href="/2017/04/04/Flask复习-八-用户认证-三/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/04/04/Flask复习-八-用户认证-三/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-Flask复习-八-用户认证-一" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -668,119 +782,6 @@
 
 
   
-    <article id="post-Flask复习-四-Web表单" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/04/Flask复习-四-Web表单/">Flask复习 三 模板(三)</a>
-    </h1>
-  
-
-        
-        <a href="/2017/04/04/Flask复习-四-Web表单/" class="archive-article-date">
-  	<time datetime="2017-04-03T16:11:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>使用Flask-WTF库实现Web表单</em></p>
-<h1 id="4-1-跨站请求伪造保护"><a href="#4-1-跨站请求伪造保护" class="headerlink" title="4.1 跨站请求伪造保护"></a>4.1 跨站请求伪造保护</h1><p>Flask-WTF保护方法:设置秘钥</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">app = Flask(__name__)</div><div class="line">app.config[&apos;SECRET_KEY&apos;] = &apos;hard to guess string&apos;</div></pre></td></tr></table></figure>
-        
-          <a class="article-more-a" href="/2017/04/04/Flask复习-四-Web表单/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/04/Flask复习-四-Web表单/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-Flask复习-三-模板-二" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/04/Flask复习-三-模板-二/">Flask复习 三 模板(二)</a>
-    </h1>
-  
-
-        
-        <a href="/2017/04/04/Flask复习-三-模板-二/" class="archive-article-date">
-  	<time datetime="2017-04-03T16:11:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="3-2-使用Flask-Bootstrap集成-Bootstrap"><a href="#3-2-使用Flask-Bootstrap集成-Bootstrap" class="headerlink" title="3.2 使用Flask-Bootstrap集成 Bootstrap"></a>3.2 使用Flask-Bootstrap集成 Bootstrap</h1><p>安装:<figure class="highlight plain"><figcaption><span>$ pip install flask-bootstrap ```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">初始化:</div><div class="line"></div><div class="line">&lt;!-- more --&gt;</div></pre></td></tr></table></figure></p>
-<p>from flask.ext.bootstrap import Bootstrap</p>
-<p>#…<br>bootstrap = Bootstrap(app)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">| 块名           | 说明                |</div><div class="line">| ------------ | ----------------- |</div><div class="line">| doc          | 整个HTML文档          |</div><div class="line">| html_attribs | &lt;html&gt;标签的属性       |</div><div class="line">| html         | &lt;html&gt;标签中的内容      |</div><div class="line">| head         | &lt;head&gt;标签中的内容      |</div><div class="line">| title        | &lt;title&gt;标签中的内容     |</div><div class="line">| metas        | 一组&lt;meta&gt;标签        |</div><div class="line">| styles       | 层叠样式表定义           |</div><div class="line">| body_attribs | &lt;body&gt;标签的属性       |</div><div class="line">| body         | &lt;body&gt;标签中的内容      |</div><div class="line">| navbar       | 用户定义的导航条          |</div><div class="line">| content      | 用户定义的页面内容         |</div><div class="line">| scripts      | 文档底部的Javascript声明 |</div><div class="line"></div><div class="line">上表中很多块欧式Flask-Bootstrap自用的,如果直接重定义可能会导致一些问题.例如，Bootstrap所需的文件在styles和scripts块中声明。如果程序需要向已经有内容的块中添加新内容， 必须使用 Jinja2 提供的 super() 函数。</div><div class="line"></div><div class="line"># 3.3 自定义错误页面</div><div class="line">自定义错误页面的路由和响应函数:</div><div class="line">1. 404,客户端请求未知页面或路由时显示.</div><div class="line">2. 500,有未处理的异常时显示.</div></pre></td></tr></table></figure></p>
-<p>@app.errorhandler(404):<br>def page_not_found(e):<br>    return render_template(‘404.html’), 404</p>
-<p>@app.errorhandler(500);<br>def internal_server_error(e):<br>    return render_template(‘500.html’), 500<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">错误页面的模板由Jinja2的模板继承机制实现.</div><div class="line"></div><div class="line"># 3.4 链接</div><div class="line">```url_for()``` 辅助函数,她可以使用程序URL映射中保存的信息生成URL.</div><div class="line">以下都是合法调用:</div></pre></td></tr></table></figure></p>
-<p>url_for(‘index’)                    # 得到的结果是/<br>url_for(‘index’, _external=True)    # 得到的结果是绝对地址,<a href="http://localhost:5000/" target="_blank" rel="external">http://localhost:5000/</a><br>url_for(‘user’, name=’john’, _external=True)    #返回结果是<a href="http://localhsot:5000/user/john" target="_blank" rel="external">http://localhsot:5000/user/john</a><br>url_for(‘index’, page=2)            #得到的结果是/?page=2<br>```</p>
-<h1 id="3-5-静态文件"><a href="#3-5-静态文件" class="headerlink" title="3.5 静态文件"></a>3.5 静态文件</h1><p>static文件夹下面</p>
-<h1 id="3-6使用Flask-Moment本地化日期和时间"><a href="#3-6使用Flask-Moment本地化日期和时间" class="headerlink" title="3.6使用Flask-Moment本地化日期和时间"></a>3.6使用Flask-Moment本地化日期和时间</h1><p>要想在服务器上只是用UTC时间,一个优雅的解决方案是,把时间单位发送给Web浏览器,转换成当地时间,然后渲染.<br>本项目中使用第三方库Flask-Moment,把moment.js集成到Jinja2模板中.</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/04/Flask复习-三-模板-二/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -795,7 +796,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2017 zlinxx
+    		&copy; 2018 zlinxx
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
