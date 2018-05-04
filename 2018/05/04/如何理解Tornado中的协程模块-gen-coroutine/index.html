@@ -6,17 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zlinxx.com">
-  <title>Archives: 2018/5 | zlinxx</title>
+  <title>如何理解Tornado中的协程模块(gen.coroutine) | zlinxx</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="start from zero">
-<meta property="og:type" content="website">
-<meta property="og:title" content="zlinxx">
-<meta property="og:url" content="http://zlinxx.com/archives/2018/05/index.html">
+  <meta name="description" content="tornado.gen 模块是一个基于 python generator 实现的异步编程接口。通过该模块提供的 coroutine （注：这里 coroutine 指的是 ”协程” 概念而不是后面具体实现的 decorator：@gen.decorator），大大简化了在 Tornado 中编写异步代码的工作 —— 支持 “同步方式编写异步代码” ，避免编写烦人的回调函数.
+@gen.corout">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何理解Tornado中的协程模块(gen.coroutine)">
+<meta property="og:url" content="http://zlinxx.com/2018/05/04/如何理解Tornado中的协程模块-gen-coroutine/index.html">
 <meta property="og:site_name" content="zlinxx">
-<meta property="og:description" content="start from zero">
+<meta property="og:description" content="tornado.gen 模块是一个基于 python generator 实现的异步编程接口。通过该模块提供的 coroutine （注：这里 coroutine 指的是 ”协程” 概念而不是后面具体实现的 decorator：@gen.decorator），大大简化了在 Tornado 中编写异步代码的工作 —— 支持 “同步方式编写异步代码” ，避免编写烦人的回调函数.
+@gen.corout">
+<meta property="og:updated_time" content="2018-05-04T14:49:47.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="zlinxx">
-<meta name="twitter:description" content="start from zero">
+<meta name="twitter:title" content="如何理解Tornado中的协程模块(gen.coroutine)">
+<meta name="twitter:description" content="tornado.gen 模块是一个基于 python generator 实现的异步编程接口。通过该模块提供的 coroutine （注：这里 coroutine 指的是 ”协程” 概念而不是后面具体实现的 decorator：@gen.decorator），大大简化了在 Tornado 中编写异步代码的工作 —— 支持 “同步方式编写异步代码” ，避免编写烦人的回调函数.
+@gen.corout">
   
     <link rel="alternative" href="/atom.xml" title="zlinxx" type="application/atom+xml">
   
@@ -146,76 +150,142 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-如何理解Tornado中的协程模块-gen-coroutine" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      如何理解Tornado中的协程模块(gen.coroutine)
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/05/04/如何理解Tornado中的协程模块-gen-coroutine/" class="archive-article-date">
+
+        
+        <a href="/2018/05/04/如何理解Tornado中的协程模块-gen-coroutine/" class="archive-article-date">
   	<time datetime="2018-05-04T14:43:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-04</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/05/04/如何理解Tornado中的协程模块-gen-coroutine/">如何理解Tornado中的协程模块(gen.coroutine)</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>tornado.gen 模块是一个基于 python generator 实现的异步编程接口。通过该模块提供的 coroutine （注：这里 coroutine 指的是 ”协程” 概念而不是后面具体实现的 decorator：@gen.decorator），大大简化了在 Tornado 中编写异步代码的工作 —— 支持 “同步方式编写异步代码” ，避免编写烦人的回调函数.</p>
+<h1 id="gen-coroutine-实现原理"><a href="#gen-coroutine-实现原理" class="headerlink" title="@gen.coroutine 实现原理"></a>@gen.coroutine 实现原理</h1><p>@gen.coroutine 中充分利用了 generator 的特性，下面是其实现代码及分析。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">def coroutine(func, replace_callback=True):</div><div class="line">    &quot;&quot;&quot;Decorator for asynchronous generators.&quot;&quot;&quot;</div><div class="line">    return _make_coroutine_wrapper(func, replace_callback=True)</div></pre></td></tr></table></figure></p>
+<p>coroutine 内部直接委托 _make_coroutine_wrapper 完成具体功能（这段代码中 coroutine 的可选参数 “replace_callback” 是没有使用的），返回一个 Future 实例对象。</p>
+<p>_make_coroutine_wrapper(func, replace_callback) 函数作为 @gen.coroutine 和 @gen.engine 内部实现，通过 replace_callback 的值来决定是否对 “callback” 方法参数进行处理。coroutine 的实现中通过 replace_callback=True 调用 _make_coroutine_wrapper 函数，会检查方法参数中是否有 “callback” 参数，如果有的话会将其加入到方法返回值 Future 的完成后回调列表中。如下面代码所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div></pre></td><td class="code"><pre><div class="line">def _make_coroutine_wrapper(func, replace_callback):</div><div class="line">    @functools.wraps(func)</div><div class="line">    def wrapper(*args, **kwargs):</div><div class="line">        future = TracebackFuture()</div><div class="line"></div><div class="line">        # 处理 “callback”，忽略或者将其加入到 Future 的完成回调列表中。</div><div class="line">        if replace_callback and &apos;callback&apos; in kwargs:</div><div class="line">            callback = kwargs.pop(&apos;callback&apos;)</div><div class="line">            IOLoop.current().add_future(</div><div class="line">                future, lambda future: callback(future.result()))</div><div class="line"></div><div class="line">        try:</div><div class="line">            result = func(*args, **kwargs)</div><div class="line">        except (Return, StopIteration) as e:</div><div class="line">            # 在 python 2 以及 python 3.3 以前，generator 中不能直接通过</div><div class="line">            # return 返回值：return 被视为 raise StopIteration()，</div><div class="line">            # return &lt;something&gt; 被视为raise StopIteration(&lt;something&gt;)。</div><div class="line">            # 在 gen 模块中，特别定义了 Return 类型用于返回值：raise gen.Return(something&gt;)</div><div class="line">            result = getattr(e, &apos;value&apos;, None)</div><div class="line">        except Exception:</div><div class="line">            # 发生异常，异常被写入 future（将会被设置为完成状态），结束调用，返回 future</div><div class="line">            future.set_exc_info(sys.exc_info())</div><div class="line">            return future</div><div class="line">        else:</div><div class="line">            if isinstance(result, types.GeneratorType):</div><div class="line">                # 通过检查 result 是否为 GeneratorType 来选择是否创建 coroutine ，对于</div><div class="line">                # 同步情况直接 future.set_result(result) 返回，避免创建 coroutine 而</div><div class="line">                # 造成的性能损失。</div><div class="line">                # 与 Tornado 4.0 之前的版本比较，这里已经把顶层 ExceptionStackContext</div><div class="line">                # 的构建以及 Runner.run 的功能进行了重构，都迁移到了 Runner 实现中。</div><div class="line">                #</div><div class="line">                # 通过 next 启动 generator ，启动前记录上下文，启动后对上下文进行一致性检查。</div><div class="line">                # 若 generator 中有从 &quot;with StackContext&quot; 直接 “yield” 的代码逻辑，将抛</div><div class="line">                # 出 StackContextInconsistentError 异常。</div><div class="line">                try:</div><div class="line">                    orig_stack_contexts = stack_context._state.contexts</div><div class="line">                    yielded = next(result)</div><div class="line">                    if stack_context._state.contexts is not orig_stack_contexts:</div><div class="line">                        yielded = TracebackFuture()</div><div class="line">                        yielded.set_exception(</div><div class="line">                            stack_context.StackContextInconsistentError(</div><div class="line">                                &apos;stack_context inconsistency (probably caused &apos;</div><div class="line">                                &apos;by yield within a &quot;with StackContext&quot; block)&apos;))</div><div class="line">                except (StopIteration, Return) as e:</div><div class="line">                    future.set_result(getattr(e, &apos;value&apos;, None))</div><div class="line">                except Exception:</div><div class="line">                    future.set_exc_info(sys.exc_info())</div><div class="line">                else:</div><div class="line">                    Runner(result, future, yielded)</div><div class="line">                try:</div><div class="line">                    return future</div><div class="line">                finally:</div><div class="line">                    # Subtle memory optimization: if next() raised an exception,</div><div class="line">                    # the future&apos;s exc_info contains a traceback which</div><div class="line">                    # includes this stack frame.  This creates a cycle,</div><div class="line">                    # which will be collected at the next full GC but has</div><div class="line">                    # been shown to greatly increase memory usage of</div><div class="line">                    # benchmarks (relative to the refcount-based scheme</div><div class="line">                    # used in the absence of cycles).  We can avoid the</div><div class="line">                    # cycle by clearing the local variable after we return it.</div><div class="line">                    #</div><div class="line">                    # 代码注释中说，generator.next() 抛出异常失败后， future 的 exc_info</div><div class="line">                    # 中会包含当前栈帧的引用，栈帧中也有对 future 的引用，这样导致一个环，必须</div><div class="line">                    # 要在下一次 full GC 时才能回收内存。返回 future 后将 future 设置为 None</div><div class="line">                    # 可以优化内存。（注：需要 full GC 是与 python 的垃圾回收实现采用引用计数</div><div class="line">                    # 为主，标记-清除和分代机制为辅相关。python 采用引用计数来立刻释放可以释放</div><div class="line">                    # 的内存，然后用标记-清除的方法来清除循环引用的不可达对象。）</div><div class="line">                    future = None</div><div class="line"></div><div class="line">        # 同步情况下，不需要创建 coroutine，直接返回 future。</div><div class="line">        future.set_result(result)</div><div class="line">        return future</div><div class="line">    return wrapper</div><div class="line"></div><div class="line">class Return(Exception):</div><div class="line">    def __init__(self, value=None):</div><div class="line">        super(Return, self).__init__()</div><div class="line">        self.value = value</div></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://zlinxx.com/2018/05/04/如何理解Tornado中的协程模块-gen-coroutine/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/05/03/SSE及Flask-SSE/" class="archive-article-date">
-  	<time datetime="2018-05-02T16:33:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-03</time>
-</a>
-        </div>
-    	 
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/05/03/SSE及Flask-SSE/">SSE及Flask-SSE</a>
-    </h1>
+  
+    <a href="/2018/05/03/SSE及Flask-SSE/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">SSE及Flask-SSE</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+    <div class="duoshuo"></div>
   
 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -238,8 +308,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

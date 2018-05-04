@@ -148,6 +148,61 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-如何理解Tornado中的协程模块-gen-coroutine" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/04/如何理解Tornado中的协程模块-gen-coroutine/">如何理解Tornado中的协程模块(gen.coroutine)</a>
+    </h1>
+  
+
+        
+        <a href="/2018/05/04/如何理解Tornado中的协程模块-gen-coroutine/" class="archive-article-date">
+  	<time datetime="2018-05-04T14:43:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>tornado.gen 模块是一个基于 python generator 实现的异步编程接口。通过该模块提供的 coroutine （注：这里 coroutine 指的是 ”协程” 概念而不是后面具体实现的 decorator：@gen.decorator），大大简化了在 Tornado 中编写异步代码的工作 —— 支持 “同步方式编写异步代码” ，避免编写烦人的回调函数.</p>
+<h1 id="gen-coroutine-实现原理"><a href="#gen-coroutine-实现原理" class="headerlink" title="@gen.coroutine 实现原理"></a>@gen.coroutine 实现原理</h1><p>@gen.coroutine 中充分利用了 generator 的特性，下面是其实现代码及分析。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">def coroutine(func, replace_callback=True):</div><div class="line">    &quot;&quot;&quot;Decorator for asynchronous generators.&quot;&quot;&quot;</div><div class="line">    return _make_coroutine_wrapper(func, replace_callback=True)</div></pre></td></tr></table></figure></p>
+<p>coroutine 内部直接委托 _make_coroutine_wrapper 完成具体功能（这段代码中 coroutine 的可选参数 “replace_callback” 是没有使用的），返回一个 Future 实例对象。</p>
+<p>_make_coroutine_wrapper(func, replace_callback) 函数作为 @gen.coroutine 和 @gen.engine 内部实现，通过 replace_callback 的值来决定是否对 “callback” 方法参数进行处理。coroutine 的实现中通过 replace_callback=True 调用 _make_coroutine_wrapper 函数，会检查方法参数中是否有 “callback” 参数，如果有的话会将其加入到方法返回值 Future 的完成后回调列表中。如下面代码所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div></pre></td><td class="code"><pre><div class="line">def _make_coroutine_wrapper(func, replace_callback):</div><div class="line">    @functools.wraps(func)</div><div class="line">    def wrapper(*args, **kwargs):</div><div class="line">        future = TracebackFuture()</div><div class="line"></div><div class="line">        # 处理 “callback”，忽略或者将其加入到 Future 的完成回调列表中。</div><div class="line">        if replace_callback and &apos;callback&apos; in kwargs:</div><div class="line">            callback = kwargs.pop(&apos;callback&apos;)</div><div class="line">            IOLoop.current().add_future(</div><div class="line">                future, lambda future: callback(future.result()))</div><div class="line"></div><div class="line">        try:</div><div class="line">            result = func(*args, **kwargs)</div><div class="line">        except (Return, StopIteration) as e:</div><div class="line">            # 在 python 2 以及 python 3.3 以前，generator 中不能直接通过</div><div class="line">            # return 返回值：return 被视为 raise StopIteration()，</div><div class="line">            # return &lt;something&gt; 被视为raise StopIteration(&lt;something&gt;)。</div><div class="line">            # 在 gen 模块中，特别定义了 Return 类型用于返回值：raise gen.Return(something&gt;)</div><div class="line">            result = getattr(e, &apos;value&apos;, None)</div><div class="line">        except Exception:</div><div class="line">            # 发生异常，异常被写入 future（将会被设置为完成状态），结束调用，返回 future</div><div class="line">            future.set_exc_info(sys.exc_info())</div><div class="line">            return future</div><div class="line">        else:</div><div class="line">            if isinstance(result, types.GeneratorType):</div><div class="line">                # 通过检查 result 是否为 GeneratorType 来选择是否创建 coroutine ，对于</div><div class="line">                # 同步情况直接 future.set_result(result) 返回，避免创建 coroutine 而</div><div class="line">                # 造成的性能损失。</div><div class="line">                # 与 Tornado 4.0 之前的版本比较，这里已经把顶层 ExceptionStackContext</div><div class="line">                # 的构建以及 Runner.run 的功能进行了重构，都迁移到了 Runner 实现中。</div><div class="line">                #</div><div class="line">                # 通过 next 启动 generator ，启动前记录上下文，启动后对上下文进行一致性检查。</div><div class="line">                # 若 generator 中有从 &quot;with StackContext&quot; 直接 “yield” 的代码逻辑，将抛</div><div class="line">                # 出 StackContextInconsistentError 异常。</div><div class="line">                try:</div><div class="line">                    orig_stack_contexts = stack_context._state.contexts</div><div class="line">                    yielded = next(result)</div><div class="line">                    if stack_context._state.contexts is not orig_stack_contexts:</div><div class="line">                        yielded = TracebackFuture()</div><div class="line">                        yielded.set_exception(</div><div class="line">                            stack_context.StackContextInconsistentError(</div><div class="line">                                &apos;stack_context inconsistency (probably caused &apos;</div><div class="line">                                &apos;by yield within a &quot;with StackContext&quot; block)&apos;))</div><div class="line">                except (StopIteration, Return) as e:</div><div class="line">                    future.set_result(getattr(e, &apos;value&apos;, None))</div><div class="line">                except Exception:</div><div class="line">                    future.set_exc_info(sys.exc_info())</div><div class="line">                else:</div><div class="line">                    Runner(result, future, yielded)</div><div class="line">                try:</div><div class="line">                    return future</div><div class="line">                finally:</div><div class="line">                    # Subtle memory optimization: if next() raised an exception,</div><div class="line">                    # the future&apos;s exc_info contains a traceback which</div><div class="line">                    # includes this stack frame.  This creates a cycle,</div><div class="line">                    # which will be collected at the next full GC but has</div><div class="line">                    # been shown to greatly increase memory usage of</div><div class="line">                    # benchmarks (relative to the refcount-based scheme</div><div class="line">                    # used in the absence of cycles).  We can avoid the</div><div class="line">                    # cycle by clearing the local variable after we return it.</div><div class="line">                    #</div><div class="line">                    # 代码注释中说，generator.next() 抛出异常失败后， future 的 exc_info</div><div class="line">                    # 中会包含当前栈帧的引用，栈帧中也有对 future 的引用，这样导致一个环，必须</div><div class="line">                    # 要在下一次 full GC 时才能回收内存。返回 future 后将 future 设置为 None</div><div class="line">                    # 可以优化内存。（注：需要 full GC 是与 python 的垃圾回收实现采用引用计数</div><div class="line">                    # 为主，标记-清除和分代机制为辅相关。python 采用引用计数来立刻释放可以释放</div><div class="line">                    # 的内存，然后用标记-清除的方法来清除循环引用的不可达对象。）</div><div class="line">                    future = None</div><div class="line"></div><div class="line">        # 同步情况下，不需要创建 coroutine，直接返回 future。</div><div class="line">        future.set_result(result)</div><div class="line">        return future</div><div class="line">    return wrapper</div><div class="line"></div><div class="line">class Return(Exception):</div><div class="line">    def __init__(self, value=None):</div><div class="line">        super(Return, self).__init__()</div><div class="line">        self.value = value</div></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/05/04/如何理解Tornado中的协程模块-gen-coroutine/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-SSE及Flask-SSE" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -189,89 +244,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/05/03/SSE及Flask-SSE/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-第二章-函数的副本" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/24/第二章-函数的副本/">第二章 函数</a>
-    </h1>
-  
-
-        
-        <a href="/2017/10/24/第二章-函数的副本/" class="archive-article-date">
-  	<time datetime="2017-10-24T15:17:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="第14条-尽量用异常来表示特殊情况-而不要返回None"><a href="#第14条-尽量用异常来表示特殊情况-而不要返回None" class="headerlink" title="第14条 尽量用异常来表示特殊情况,而不要返回None"></a>第14条 尽量用异常来表示特殊情况,而不要返回None</h1><p>None会让某些函数误会,产生不可预料的错误<br>避免产生错误的方法:</p>
-<ol>
-<li>把返回值拆分成两块<code>(0/1, None/结果)</code></li>
-<li>(推荐)根本不返回None,而是把错误抛回上一级,使得调用者必须处理<br><code>raise ValueError()</code><h1 id="第15条-了解如何在闭包里使用外围作用域中的变量"><a href="#第15条-了解如何在闭包里使用外围作用域中的变量" class="headerlink" title="第15条 了解如何在闭包里使用外围作用域中的变量"></a>第15条 了解如何在闭包里使用外围作用域中的变量</h1></li>
-</ol>
-<ul>
-<li>闭包:闭包是一种定义在某个作用域中的函数,这种函数引用了那个作用域中里面的变量</li>
-<li><p>python解释器按如下顺序遍历各作用域:</p>
-<ol>
-<li>当前函数的作用域</li>
-<li>任何外围作用域</li>
-<li>包含当前代码的那个模块的作用域(全局作用域)</li>
-<li>内置作用域</li>
-</ol>
-</li>
-<li><p>获取闭包内的数据:</p>
-<ol>
-<li><p>python3: nonlocal 声明变量,如果在闭包内给该变量赋值,那么修改的其实是闭包外那个作用域中的变量.<br><br>nonlocal唯一的限制:不能延伸到模块级别,为了防止它污染全局作用域<br><br>防止被滥用,nonlocal最好只在简单函数中使用<br>闭包太复杂的时候,改写成辅助类</p>
-</li>
-<li><p>python2: 将变量变为列表,列表本身是可以修改的,从而修改闭包中变量的值</p>
-</li>
-</ol>
-</li>
-</ul>
-<h1 id="第16条-考虑用生成器来改写直接返回列表的函数"><a href="#第16条-考虑用生成器来改写直接返回列表的函数" class="headerlink" title="第16条 考虑用生成器来改写直接返回列表的函数"></a>第16条 考虑用生成器来改写直接返回列表的函数</h1><p>要产生一系列结果时,最简单的做法就是把这些结果append到一份列表里<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">index_words</span><span class="params">(text)</span>:</span></div><div class="line">	result = []</div><div class="line">	<span class="keyword">if</span> text:</div><div class="line">		result.append(<span class="number">0</span>)</div><div class="line">    <span class="keyword">for</span> index, letter <span class="keyword">in</span> enumerate(text):</div><div class="line">        <span class="keyword">if</span> letter == <span class="string">' '</span>:</div><div class="line">          result.append(index+<span class="number">1</span>)</div><div class="line">    <span class="keyword">return</span> result</div></pre></td></tr></table></figure></p>
-<p>index_words函数有两个问题:</p>
-<ol>
-<li>代码写的很拥挤,append太多次没必要</li>
-<li>return之前数据都向result中存,如果数据量巨大,可能会导致内存耗尽崩溃</li>
-</ol>
-<p>改用生成器:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">index_words_iter</span><span class="params">(text)</span>:</span></div><div class="line">  <span class="keyword">if</span> text:</div><div class="line">    <span class="keyword">yield</span> <span class="number">0</span> </div><div class="line">  <span class="keyword">for</span> index, letter <span class="keyword">in</span> enumerate(text):</div><div class="line">    <span class="keyword">if</span> letter == <span class="string">' '</span>:</div><div class="line">      <span class="keyword">yield</span> index + <span class="number">1</span></div><div class="line">      </div><div class="line">      </div><div class="line"> result = list(index_words_iter(address))</div></pre></td></tr></table></figure>
-<p>生成器注意: 生成器是有状态的,只能使用一次,不可以反复使用</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/10/24/第二章-函数的副本/">展开全文 >></a>
         </p>
       
 
@@ -360,6 +332,89 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/10/24/第二章-函数/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-第二章-函数的副本" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/24/第二章-函数的副本/">第二章 函数</a>
+    </h1>
+  
+
+        
+        <a href="/2017/10/24/第二章-函数的副本/" class="archive-article-date">
+  	<time datetime="2017-10-24T15:17:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="第14条-尽量用异常来表示特殊情况-而不要返回None"><a href="#第14条-尽量用异常来表示特殊情况-而不要返回None" class="headerlink" title="第14条 尽量用异常来表示特殊情况,而不要返回None"></a>第14条 尽量用异常来表示特殊情况,而不要返回None</h1><p>None会让某些函数误会,产生不可预料的错误<br>避免产生错误的方法:</p>
+<ol>
+<li>把返回值拆分成两块<code>(0/1, None/结果)</code></li>
+<li>(推荐)根本不返回None,而是把错误抛回上一级,使得调用者必须处理<br><code>raise ValueError()</code><h1 id="第15条-了解如何在闭包里使用外围作用域中的变量"><a href="#第15条-了解如何在闭包里使用外围作用域中的变量" class="headerlink" title="第15条 了解如何在闭包里使用外围作用域中的变量"></a>第15条 了解如何在闭包里使用外围作用域中的变量</h1></li>
+</ol>
+<ul>
+<li>闭包:闭包是一种定义在某个作用域中的函数,这种函数引用了那个作用域中里面的变量</li>
+<li><p>python解释器按如下顺序遍历各作用域:</p>
+<ol>
+<li>当前函数的作用域</li>
+<li>任何外围作用域</li>
+<li>包含当前代码的那个模块的作用域(全局作用域)</li>
+<li>内置作用域</li>
+</ol>
+</li>
+<li><p>获取闭包内的数据:</p>
+<ol>
+<li><p>python3: nonlocal 声明变量,如果在闭包内给该变量赋值,那么修改的其实是闭包外那个作用域中的变量.<br><br>nonlocal唯一的限制:不能延伸到模块级别,为了防止它污染全局作用域<br><br>防止被滥用,nonlocal最好只在简单函数中使用<br>闭包太复杂的时候,改写成辅助类</p>
+</li>
+<li><p>python2: 将变量变为列表,列表本身是可以修改的,从而修改闭包中变量的值</p>
+</li>
+</ol>
+</li>
+</ul>
+<h1 id="第16条-考虑用生成器来改写直接返回列表的函数"><a href="#第16条-考虑用生成器来改写直接返回列表的函数" class="headerlink" title="第16条 考虑用生成器来改写直接返回列表的函数"></a>第16条 考虑用生成器来改写直接返回列表的函数</h1><p>要产生一系列结果时,最简单的做法就是把这些结果append到一份列表里<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">index_words</span><span class="params">(text)</span>:</span></div><div class="line">	result = []</div><div class="line">	<span class="keyword">if</span> text:</div><div class="line">		result.append(<span class="number">0</span>)</div><div class="line">    <span class="keyword">for</span> index, letter <span class="keyword">in</span> enumerate(text):</div><div class="line">        <span class="keyword">if</span> letter == <span class="string">' '</span>:</div><div class="line">          result.append(index+<span class="number">1</span>)</div><div class="line">    <span class="keyword">return</span> result</div></pre></td></tr></table></figure></p>
+<p>index_words函数有两个问题:</p>
+<ol>
+<li>代码写的很拥挤,append太多次没必要</li>
+<li>return之前数据都向result中存,如果数据量巨大,可能会导致内存耗尽崩溃</li>
+</ol>
+<p>改用生成器:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">index_words_iter</span><span class="params">(text)</span>:</span></div><div class="line">  <span class="keyword">if</span> text:</div><div class="line">    <span class="keyword">yield</span> <span class="number">0</span> </div><div class="line">  <span class="keyword">for</span> index, letter <span class="keyword">in</span> enumerate(text):</div><div class="line">    <span class="keyword">if</span> letter == <span class="string">' '</span>:</div><div class="line">      <span class="keyword">yield</span> index + <span class="number">1</span></div><div class="line">      </div><div class="line">      </div><div class="line"> result = list(index_words_iter(address))</div></pre></td></tr></table></figure>
+<p>生成器注意: 生成器是有状态的,只能使用一次,不可以反复使用</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/10/24/第二章-函数的副本/">展开全文 >></a>
         </p>
       
 
@@ -807,71 +862,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/04/04/Flask复习-十一-博客文章-一/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-Flask复习-十-用户资料" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/04/Flask复习-十-用户资料/">Flask复习 十 用户资料</a>
-    </h1>
-  
-
-        
-        <a href="/2017/04/04/Flask复习-十-用户资料/" class="archive-article-date">
-  	<time datetime="2017-04-03T16:30:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="10-1-资料信息"><a href="#10-1-资料信息" class="headerlink" title="10.1 资料信息"></a>10.1 资料信息</h1><ol>
-<li>app/models 用户信息字段</li>
-</ol>
-<ul>
-<li><p>name:真实姓名</p>
-</li>
-<li><p>location:所在地</p>
-</li>
-<li><p>about_me:自我介绍</p>
-</li>
-<li><p>member_since:注册日期</p>
-</li>
-<li><p>last_seen:最后访问日期</p>
-        
-          <a class="article-more-a" href="/2017/04/04/Flask复习-十-用户资料/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/04/Flask复习-十-用户资料/">展开全文 >></a>
         </p>
       
 
