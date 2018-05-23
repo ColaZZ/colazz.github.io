@@ -148,6 +148,67 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Flask复习-十一-博客文章-一" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/04/Flask复习-十一-博客文章-一/">Flask复习 十一 博客文章(一)</a>
+    </h1>
+  
+
+        
+        <a href="/2017/04/04/Flask复习-十一-博客文章-一/" class="archive-article-date">
+  	<time datetime="2017-04-03T16:30:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="11-1-提交和显示博客文章"><a href="#11-1-提交和显示博客文章" class="headerlink" title="11.1 提交和显示博客文章"></a>11.1 提交和显示博客文章</h1><ol>
+<li>文章模型:app/models</li>
+</ol>
+<ul>
+<li><p>id</p>
+</li>
+<li><p>body:博客文章 </p>
+</li>
+<li><p>timestamp:创建时间</p>
+        
+          <a class="article-more-a" href="/2017/04/04/Flask复习-十一-博客文章-一/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/04/04/Flask复习-十一-博客文章-一/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-Flask复习-十-用户资料" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -636,144 +697,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/04/04/Flask复习-五-数据库-三/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-Flask复习-五-数据库-二" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/04/Flask复习-五-数据库-二/">Flask复习 五 数据库(二)</a>
-    </h1>
-  
-
-        
-        <a href="/2017/04/04/Flask复习-五-数据库-二/" class="archive-article-date">
-  	<time datetime="2017-04-03T16:14:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="5-8-数据库操作"><a href="#5-8-数据库操作" class="headerlink" title="5.8 数据库操作"></a>5.8 数据库操作</h1><h2 id="5-8-1-创建表"><a href="#5-8-1-创建表" class="headerlink" title="5.8.1 创建表"></a>5.8.1 创建表</h2><p>db.create_all()函数创建表<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">(venv) $ python hello.py shell</div><div class="line">&gt;&gt;&gt; from hello import db</div><div class="line">&gt;&gt;&gt; db.create_all()</div></pre></td></tr></table></figure></p>
-<p>删除旧表使用<figure class="highlight plain"><figcaption><span>函数</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&lt;!-- more --&gt;</div><div class="line"></div><div class="line">## 5.8.2 插入行</div><div class="line">在Flask-SQLAlchemy中,会话由db.session表示.</div><div class="line">准备把对象写入数据库之前,先要将其添加到会话中:</div></pre></td></tr></table></figure></p>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>db.session.add(admin_role)<br>db.session.add(mod_role)<br>db.session.add(user_role)<br>db.session.add(user_john)<br>db.session.add(user_susan)<br>db.session.add(user_david)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">或者简写成:</div></pre></td></tr></table></figure></p>
-<p>db.session.add_all([admin_role, mod_role, user_role,<br>… user_john, user_susan, user_david])<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">然后调用commit()方法提交会话:</div></pre></td></tr></table></figure></p>
-<p>db.session.commit()<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">## 5.8.3 修改行</div><div class="line">调用add()方法也能更新模型</div><div class="line"></div><div class="line">## 5.8.4 删除行</div></pre></td></tr></table></figure></p>
-<p>db.session.delete(mod_role)<br>db.session.commit()<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">## 5.8.5 查询行</div><div class="line">Flask-SQLAlchemy为每个模型类都提供了query对象.</div><div class="line">所有记录:</div></pre></td></tr></table></figure></p>
-<p>Role.query.all()<br>User.query.all()<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">filter()过滤器可以配置query对象进行精确地数据库查询.</div><div class="line">若要查看SQLAlchemy为查询生成的原生SQL查询语句,只需把query对象转换成字符串:</div></pre></td></tr></table></figure></p>
-<p>str(User.query.filter_by(role=user_role))<br> ‘SELECT users.id AS users_id, users.username AS users_username,users.role_id AS users_role_id FROM users WHERE :param_1 = users.role_id’<br>```</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<p>常用的SQLAlchemy查询过滤器</p>
-<table>
-<thead>
-<tr>
-<th>过滤器</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>filter()</td>
-<td>把过滤器添加到原查询上，返回一个新查询</td>
-</tr>
-<tr>
-<td>filter_by()</td>
-<td>把等值过滤器添加到原查询上，返回一个新查询</td>
-</tr>
-<tr>
-<td>limit()</td>
-<td>使用指定的值限制原查询返回的结果数量，返回一个新查询</td>
-</tr>
-<tr>
-<td>offset()</td>
-<td>偏移原查询返回的结果，返回一个新查询</td>
-</tr>
-<tr>
-<td>order_by()</td>
-<td>根据指定条件对原查询结果进行排序，返回一个新查询</td>
-</tr>
-<tr>
-<td>group_by()</td>
-<td>根据指定条件对原查询结果进行排序,返回一个新查询</td>
-</tr>
-</tbody>
-</table>
-<p>常用的SQLAlchemy查询执行函数</p>
-<table>
-<thead>
-<tr>
-<th>方法</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>all()</td>
-<td>以列表形式返回查询的所有结果</td>
-</tr>
-<tr>
-<td>first()</td>
-<td>返回查询的第一个结果，如果没有结果，则返回 None</td>
-</tr>
-<tr>
-<td>first_or_404()</td>
-<td>返回查询的第一个结果，如果没有结果，则终止请求,返回404错误响应</td>
-</tr>
-<tr>
-<td>get()</td>
-<td>返回指定主键对应的行，如果没有对应的行，则返回 None</td>
-</tr>
-<tr>
-<td>get_or_404()</td>
-<td>返回指定主键对应的行，如果没有对应的行，则终止请求,返回404错误响应</td>
-</tr>
-<tr>
-<td>count()</td>
-<td>返回查询结果的数量</td>
-</tr>
-<tr>
-<td>paginate()</td>
-<td>返回一个Paginate对象,它包含指定范围内的结果</td>
-</tr>
-</tbody>
-</table>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/04/Flask复习-五-数据库-二/">展开全文 >></a>
         </p>
       
 

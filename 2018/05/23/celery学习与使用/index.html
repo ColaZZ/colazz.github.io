@@ -6,17 +6,30 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zlinxx.com">
-  <title>Archives: 2017 | zlinxx</title>
+  <title>celery学习与使用 | zlinxx</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="start from zero">
-<meta property="og:type" content="website">
-<meta property="og:title" content="zlinxx">
-<meta property="og:url" content="http://zlinxx.com/archives/2017/index.html">
+  <meta name="description" content="Celery介绍Celery是一个专注于实时处理和任务调度的分布式任务队列.使用Celery的场景如下:
+
+Web应用:异步执行可以减少用户等待操作时间
+定时任务
+其他可以异步执行的任务:例如发送短信/邮件,推送消息,清理/设置缓存等">
+<meta property="og:type" content="article">
+<meta property="og:title" content="celery学习与使用">
+<meta property="og:url" content="http://zlinxx.com/2018/05/23/celery学习与使用/index.html">
 <meta property="og:site_name" content="zlinxx">
-<meta property="og:description" content="start from zero">
+<meta property="og:description" content="Celery介绍Celery是一个专注于实时处理和任务调度的分布式任务队列.使用Celery的场景如下:
+
+Web应用:异步执行可以减少用户等待操作时间
+定时任务
+其他可以异步执行的任务:例如发送短信/邮件,推送消息,清理/设置缓存等">
+<meta property="og:updated_time" content="2018-05-23T16:45:15.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="zlinxx">
-<meta name="twitter:description" content="start from zero">
+<meta name="twitter:title" content="celery学习与使用">
+<meta name="twitter:description" content="Celery介绍Celery是一个专注于实时处理和任务调度的分布式任务队列.使用Celery的场景如下:
+
+Web应用:异步执行可以减少用户等待操作时间
+定时任务
+其他可以异步执行的任务:例如发送短信/邮件,推送消息,清理/设置缓存等">
   
     <link rel="alternative" href="/atom.xml" title="zlinxx" type="application/atom+xml">
   
@@ -146,296 +159,172 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-celery学习与使用" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      celery学习与使用
+    </h1>
+  
+
+        
+        <a href="/2018/05/23/celery学习与使用/" class="archive-article-date">
+  	<time datetime="2018-05-23T10:09:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-23</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Celery介绍"><a href="#Celery介绍" class="headerlink" title="Celery介绍"></a>Celery介绍</h1><p>Celery是一个专注于实时处理和任务调度的分布式任务队列.<br>使用Celery的场景如下:</p>
+<ul>
+<li>Web应用:异步执行可以减少用户等待操作时间</li>
+<li>定时任务</li>
+<li><p>其他可以异步执行的任务:例如发送短信/邮件,推送消息,清理/设置缓存等</p>
+ <a id="more"></a>
+</li>
+</ul>
+<h1 id="Celery架构"><a href="#Celery架构" class="headerlink" title="Celery架构"></a>Celery架构</h1><p>Celery包含如下组件:</p>
+<ul>
+<li>Celery Beat:任务调度器,Beat进程会读取配置文件的内容,周期性地将配置中到期需要执行的任务发送给任务队列</li>
+<li>Celery Worker:执行任务的消费者,通常会在多台服务器运行多个消费者来提高执行效率</li>
+<li>Broker: 消息代理,或者叫消息中间件,接受任务生产者发送过来的任务消息,存进队列再按序分发给任务消费方</li>
+<li>Producer: 调用了Celery提供的API,函数或者装饰器而产生任务并交给任务队列处理的都是任务生产者</li>
+<li>Result Backend: 任务处理完后保存状态信息和结果,以供查询.Celery默认已经支持Redis,RabbitMQ,MongoDB,Django Orm,SQLAlchemy等方式.</li>
+</ul>
+<h1 id="Celery初体验"><a href="#Celery初体验" class="headerlink" title="Celery初体验"></a>Celery初体验</h1><p>方案:</p>
+<ul>
+<li>选择RabbitMQ作为消息代理</li>
+<li>RabbitMQ的python客户端选择librabbitmq这个C库</li>
+<li>选择Msgpack做序列化</li>
+<li>选择Redis作为结果存储</li>
+<li>简单例子<a href="https://github.com/ColaZZ/daily-exercise/tree/master/celery_ex" target="_blank" rel="external">https://github.com/ColaZZ/daily-exercise/tree/master/celery_ex</a></li>
+</ul>
+<h1 id="进阶用法"><a href="#进阶用法" class="headerlink" title="进阶用法"></a>进阶用法</h1><p>例子中的task.py<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">@app.task    # 普通函数装饰为celery task</div><div class="line">def add(x, y):</div><div class="line">    return x + y</div></pre></td></tr></table></figure></p>
+<p>这里的装饰器@app.task实际上是将一个正常的函数修饰成了一个celery task对象,所以我们可以给装饰器加上参数来决定修饰后的task对象的一些属性.</p>
+<p>首先,我们可以让被修饰的函数成为task对象的绑定方法,这样就相当于被修饰的函数add成了task的实例方法,可以调用self获取当前task实例的很多状态和属性.</p>
+<p>其次,我们也可以自己复写task类然后让这个自定义task修饰函数add,来做一些自定义操作.</p>
+<h2 id="1-根据任务状态执行不同的操作"><a href="#1-根据任务状态执行不同的操作" class="headerlink" title="1. 根据任务状态执行不同的操作"></a>1. 根据任务状态执行不同的操作</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># tasks.py</div><div class="line">class MyTask(Task):</div><div class="line">    def on_success(self, retval, task_id, args, kwargs):</div><div class="line">        print &apos;task done: &#123;0&#125;&apos;.format(retval)</div><div class="line">        return super(MyTask, self).on_success(retval, task_id, args, kwargs)</div><div class="line">    def on_failure(self, exc, task_id, args, kwargs, einfo):</div><div class="line">        print &apos;task fail, reason: &#123;0&#125;&apos;.format(exc)</div><div class="line">        return super(MyTask, self).on_failure(exc, task_id, args, kwargs, einfo)</div><div class="line">@app.task(base=MyTask)</div><div class="line">def add(x, y):</div><div class="line">    return x + y</div></pre></td></tr></table></figure>
+<h2 id="2-绑定任务为实例方法"><a href="#2-绑定任务为实例方法" class="headerlink" title="2. 绑定任务为实例方法"></a>2. 绑定任务为实例方法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"># tasks.py</div><div class="line">from celery.utils.log import get_task_logger</div><div class="line">logger = get_task_logger(__name__)</div><div class="line">@app.task(bind=True)</div><div class="line">def add(self, x, y):</div><div class="line">    logger.info(self.request.__dict__)</div><div class="line">    return x + y</div></pre></td></tr></table></figure>
+<h2 id="3-任务状态回调"><a href="#3-任务状态回调" class="headerlink" title="3.任务状态回调"></a>3.任务状态回调</h2><p>实际场景中得知任务状态是很常见的需求，对于 Celery 其内建任务状态有如下几种：<br>| 参数           |  说明           |<br>| ————- |:—————:|<br>| PENDING       | 任务等待中        |<br>| STARTED       | 任务已开始        |<br>| SUCCESS       | 任务执行成功      |<br>| FAILURE       | 任务执行失败      |<br>| RETRY         | 任务将被重试      |<br>| REVOKED       | 任务取消          |</p>
+<h2 id="4-定时-周期任务"><a href="#4-定时-周期任务" class="headerlink" title="4.定时/周期任务"></a>4.定时/周期任务</h2><p>Celery 进行周期任务只需要在配置中配置好周期任务，然后在运行一个周期任务触发器（ beat ）即可：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"># celery_config.py</div><div class="line">from datetime import timedelta</div><div class="line">from celery.schedules import crontab</div><div class="line">CELERYBEAT_SCHEDULE = &#123;</div><div class="line">    &apos;ptask&apos;: &#123;</div><div class="line">        &apos;task&apos;: &apos;tasks.period_task&apos;,</div><div class="line">        &apos;schedule&apos;: timedelta(seconds=5),</div><div class="line">    &#125;,</div><div class="line">&#125;</div><div class="line">CELERY_RESULT_BACKEND = &apos;redis://localhost:6379/0&apos;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># tasks.py</div><div class="line">app = Celery(&apos;tasks&apos;, backend=&apos;redis://localhost:6379/0&apos;, broker=&apos;redis://localhost:6379/0&apos;)</div><div class="line">app.config_from_object(&apos;celery_config&apos;)</div><div class="line">@app.task(bind=True)</div><div class="line">def period_task(self):</div><div class="line">    print &apos;period task done: &#123;0&#125;&apos;.format(self.request.id)</div></pre></td></tr></table></figure>
+<h2 id="5-调用任务"><a href="#5-调用任务" class="headerlink" title="5.调用任务"></a>5.调用任务</h2><p>前面讲了调用任务不能直接使用普通的调用方式，而是要用类似 add.delay(2, 2) 的方式调用，而链式任务中又用到了 apply_async 方法进行调用，实际上 delay 只是 apply_async 的快捷方式，二者作用相同，只是 apply_async 可以进行更多的任务属性设置，比如 callbacks/errbacks 正常回调与错误回调、执行超时、重试、重试时间等等</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/10/24/第二章-函数的副本/" class="archive-article-date">
-  	<time datetime="2017-10-24T15:17:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-24</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/24/第二章-函数的副本/">第二章 函数</a>
-    </h1>
-  
+      
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://zlinxx.com/2018/05/23/celery学习与使用/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/10/24/第二章-函数/" class="archive-article-date">
-  	<time datetime="2017-10-24T15:17:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-24</time>
-</a>
-        </div>
-    	 
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/24/第二章-函数/">第二章 函数</a>
-    </h1>
+  
+    <a href="/2018/05/04/如何理解Tornado中的协程模块-gen-coroutine/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">如何理解Tornado中的协程模块(gen.coroutine)</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+    <div class="duoshuo"></div>
   
 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/10/11/第一章-用Pythonic方式来思考/" class="archive-article-date">
-  	<time datetime="2017-10-10T16:27:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/11/第一章-用Pythonic方式来思考/">第一章-用Pythonic方式来思考</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/04/04/Flask复习-十四-应用编程接口/" class="archive-article-date">
-  	<time datetime="2017-04-03T16:33:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/04/04/Flask复习-十四-应用编程接口/">Flask复习 十四 应用编程接口</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/04/04/Flask复习-十三-用户评论/" class="archive-article-date">
-  	<time datetime="2017-04-03T16:33:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/04/04/Flask复习-十三-用户评论/">Flask复习 十三 用户评论</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/04/04/Flask复习十二-关注者/" class="archive-article-date">
-  	<time datetime="2017-04-03T16:32:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/04/04/Flask复习十二-关注者/">Flask复习十二 关注者</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/04/04/Flask复习-十一-博客文章-二/" class="archive-article-date">
-  	<time datetime="2017-04-03T16:31:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/04/04/Flask复习-十一-博客文章-二/">Flask复习 十一 博客文章(二)</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/04/04/Flask复习-十一-博客文章-一/" class="archive-article-date">
-  	<time datetime="2017-04-03T16:30:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/04/04/Flask复习-十一-博客文章-一/">Flask复习 十一 博客文章(一)</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/04/04/Flask复习-十-用户资料/" class="archive-article-date">
-  	<time datetime="2017-04-03T16:30:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/04/04/Flask复习-十-用户资料/">Flask复习 十 用户资料</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/04/04/Flask复习-九-用户角色/" class="archive-article-date">
-  	<time datetime="2017-04-03T16:29:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/04/04/Flask复习-九-用户角色/">Flask复习 九 用户角色</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/2017/page/2/">2</a><a class="page-number" href="/archives/2017/page/3/">3</a><a class="extend next" rel="next" href="/archives/2017/page/2/">Next &raquo;</a>
-    </nav>
-  
 
 
           </div>
@@ -458,8 +347,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
